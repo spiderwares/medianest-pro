@@ -1,0 +1,228 @@
+/*--------------------------- Checkbox Field ---------------------------*/
+
+.wpmn_checkbox_field {
+    line-height: 1.7rem;
+}
+
+.wpmn_sort_menu_submenu,
+.wpmn_sort_menu_nested {
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    min-width: 250px;
+    list-style: none;
+    margin: 0;
+    padding: 4px 0;
+    z-index: 1001;
+}
+
+.wpmn_sort_menu_item.has-submenu:hover>.wpmn_sort_menu_submenu,
+.wpmn_sort_menu_subitem.has-nested:hover>.wpmn_sort_menu_nested {
+    display: block;
+}
+
+.wpmn_sort_menu_submenu li,
+.wpmn_sort_menu_nested li {
+    padding: 8px 12px;
+    cursor: pointer;
+    color: #1d2327;
+    font-size: 13px;
+}
+
+.wpmn_sort_menu_submenu li:hover,
+.wpmn_sort_menu_nested li:hover {
+    background: #f0f0f1;
+}
+
+.wpmn_sort_menu_subitem:hover {
+    background: #f0f0f1;
+}
+
+.wpmn_sort_menu_subitem .dashicons {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+}
+
+.wpmn_sort_menu_subitem {
+    position: relative;
+    padding: 8px 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #1d2327;
+    font-size: 13px;
+}
+
+.wpmn_sort_menu_subitem:hover {
+    background: #f0f0f1;
+}
+
+.wpmn_sort_menu_subitem .dashicons {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+}
+
+/* Context Menu Color Picker Styles */
+.wpmn_context_menu_item.has-submenu {
+    position: relative;
+    padding: 0 !important;
+    /* Clear default padding to let label handle it */
+    overflow: visible !important;
+    /* Allow submenu to overflow */
+}
+
+/* Helper to structure the label */
+.wpmn_menu_label {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    width: 100%;
+    box-sizing: border-box;
+    cursor: pointer;
+    justify-content: space-between;
+}
+
+.wpmn_menu_label span:first-of-type {
+    flex-grow: 1;
+    margin-left: 8px;
+}
+
+.wpmn_menu_label .wpmn_submenu_arrow {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+    color: #555;
+    line-height: inherit;
+}
+
+/* Submenu Dropdown */
+.wpmn_color_picker_dropdown {
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: -10px;
+    background: #fff;
+    border-radius: 4px;
+    padding: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    width: 230px;
+    z-index: 9999;
+    border: 1px solid #eee;
+}
+
+.wpmn_context_menu_item.has-submenu:hover .wpmn_color_picker_dropdown {
+    display: block;
+}
+
+/* Color Grid */
+.wpmn_color_grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 2px;
+}
+
+.wpmn_color_option {
+    width: 24px;
+    height: 24px;
+    border-radius: 3px;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    /* subtle border for light colors */
+    transition: transform 0.1s;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.wpmn_color_option:hover {
+    transform: scale(1.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.wpmn_color_option.selected::after {
+    content: "\f147";
+    /* dashicons-yes */
+    font-family: dashicons;
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 18px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    line-height: 1;
+}
+
+/* Separator */
+.wpmn_color_picker_dropdown hr {
+    margin: 10px 0;
+    border: 0;
+    border-top: 1px solid #eee;
+}
+
+/* Custom Color Input Row */
+.wpmn_custom_color_row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.wpmn_current_color_preview {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    background-color: #673ab7;
+    /* Default */
+    flex-shrink: 0;
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.wpmn_current_color_preview::after {
+    content: "\f147";
+    font-family: dashicons;
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    line-height: 1;
+}
+
+.wpmn_custom_color_input {
+    flex-grow: 1;
+    /* Take remaining space */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 0 8px;
+    font-size: 13px;
+    line-height: 30px;
+    height: 30px;
+    width: auto;
+    /* Override WordPress defaults if any */
+    max-width: 100px;
+}
+
+.wpmn_refresh_color {
+    color: #888;
+    cursor: pointer;
+    font-size: 18px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wpmn_refresh_color:hover {
+    color: #555;
+}

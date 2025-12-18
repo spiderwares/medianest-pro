@@ -4,6 +4,7 @@
  * Installation related functions and actions.
  */
 
+// Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 if ( ! class_exists( 'WPMN_Install_Pro' ) ) :
@@ -45,8 +46,8 @@ if ( ! class_exists( 'WPMN_Install_Pro' ) ) :
                 'settings' => sprintf(
                     '<a href="%s" aria-label="%s">%s</a>',
                     admin_url( 'admin.php?page=cosmic-wpmn' ),
-                    esc_attr__( 'Settings', 'medianest' ),
-                    esc_html__( 'Settings', 'medianest' )
+                    esc_attr__( 'Settings', 'medianest_pro' ),
+                    esc_html__( 'Settings', 'medianest_pro' )
                 ),
             );
             return array_merge( $action_links, $links );

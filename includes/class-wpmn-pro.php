@@ -1,5 +1,6 @@
 <?php
 
+// Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 if ( ! class_exists( 'WPMN_PRO' ) ) :
@@ -78,6 +79,8 @@ final class WPMN_PRO {
         else:
             $this->includes_public();
         endif;
+
+        require_once WPMN_PRO_PATH . 'includes/wpmn-core-functions-pro.php';
     }
 
     /**
@@ -85,6 +88,9 @@ final class WPMN_PRO {
      */
     public function includes_admin() {
         require_once WPMN_PRO_PATH . 'includes/class-wpmn-install-pro.php';
+        require_once WPMN_PRO_PATH . 'includes/admin/settings/class-wpmn-settings-pro.php';
+        require_once WPMN_PRO_PATH . 'includes/admin/settings/class-admin-menu-pro.php';
+        require_once WPMN_PRO_PATH . 'includes/admin/settings/class-wpmn-media-pro.php';
     }
 
     /**
