@@ -33,6 +33,11 @@
     font-size: 13px;
 }
 
+.wpmn_sort_menu_submenu li.is-active,
+.wpmn_sort_menu_nested li.is-active {
+    color: #2271b1 !important;
+}
+
 .wpmn_sort_menu_submenu li:hover,
 .wpmn_sort_menu_nested li:hover {
     background: #f0f0f1;
@@ -63,22 +68,12 @@
     background: #f0f0f1;
 }
 
-.wpmn_sort_menu_subitem .dashicons {
-    font-size: 16px;
-    width: 16px;
-    height: 16px;
-}
-
-/* Context Menu Color Picker Styles */
 .wpmn_context_menu_item.has-submenu {
     position: relative;
     padding: 0 !important;
-    /* Clear default padding to let label handle it */
     overflow: visible !important;
-    /* Allow submenu to overflow */
 }
 
-/* Helper to structure the label */
 .wpmn_menu_label {
     display: flex;
     align-items: center;
@@ -121,7 +116,6 @@
     display: block;
 }
 
-/* Color Grid */
 .wpmn_color_grid {
     display: flex;
     flex-wrap: wrap;
@@ -135,7 +129,6 @@
     border-radius: 3px;
     cursor: pointer;
     border: 1px solid rgba(0, 0, 0, 0.05);
-    /* subtle border for light colors */
     transition: transform 0.1s;
     position: relative;
     box-sizing: border-box;
@@ -149,7 +142,6 @@
 
 .wpmn_color_option.selected::after {
     content: "\f147";
-    /* dashicons-yes */
     font-family: dashicons;
     color: #fff;
     position: absolute;
@@ -161,14 +153,12 @@
     line-height: 1;
 }
 
-/* Separator */
 .wpmn_color_picker_dropdown hr {
     margin: 10px 0;
     border: 0;
     border-top: 1px solid #eee;
 }
 
-/* Custom Color Input Row */
 .wpmn_custom_color_row {
     display: flex;
     align-items: center;
@@ -180,7 +170,6 @@
     height: 32px;
     border-radius: 4px;
     background-color: #673ab7;
-    /* Default */
     flex-shrink: 0;
     position: relative;
     border: 1px solid rgba(0, 0, 0, 0.1);
@@ -200,7 +189,6 @@
 
 .wpmn_custom_color_input {
     flex-grow: 1;
-    /* Take remaining space */
     border: 1px solid #ddd;
     border-radius: 4px;
     padding: 0 8px;
@@ -208,7 +196,6 @@
     line-height: 30px;
     height: 30px;
     width: auto;
-    /* Override WordPress defaults if any */
     max-width: 100px;
 }
 

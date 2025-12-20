@@ -38,9 +38,9 @@ if ( ! class_exists( 'WPMN_Admin_Menu_Pro' ) ) :
             );
 
             wp_enqueue_script( 
-                'wpmn-admin-script-pro', 
-                WPMN_PRO_URL . 'assets/js/wpmn-admin-script-pro.js', 
-                array( 'jquery' ), 
+                'wpmn-admin-pro', 
+                WPMN_PRO_URL . 'assets/js/wpmn-admin-pro.js', 
+                array( 'jquery' , 'wp-hooks' ), 
                 WPMN_PRO_VERSION,
                 true
             );
