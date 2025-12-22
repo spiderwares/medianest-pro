@@ -48,14 +48,14 @@ if ( ! class_exists( 'WPMN_Settings_Pro' ) ) :
             );
 
             $fields['post_type_selection'] = array(
-                'title'         => esc_html__('Post Type Selection', 'medianest'),
+                'title'         => esc_html__('Post Type Selection', 'medianest_pro'),
                 'field_type'    => 'wpmntitle',
                 'extra_class'   => 'heading',
                 'default'       => '',
             );
 
             $fields['post_types'] = array(
-                'title'      => esc_html__( 'Choose MediaNest Post Types', 'medianest' ),
+                'title'      => esc_html__( 'Choose MediaNest Post Types', 'medianest_pro' ),
                 'field_type' => 'wpmncheckbox',
                 'default'    => array( '' ),
                 'name'       => 'wpmn_settings[post_types]',
@@ -86,7 +86,7 @@ if ( ! class_exists( 'WPMN_Settings_Pro' ) ) :
             return $post_type_options;
         }
 
-        public function load_checkbox_field( $html, $wpmn_field, $wpmn_field_Val, $wpmn_field_Key ) {
+        public function load_checkbox_field( $wpmn_html, $wpmn_field, $wpmn_field_Val, $wpmn_field_Key ) {
             
             wpmn_get_template_pro(
                 'fields/checkbox-field.php', 

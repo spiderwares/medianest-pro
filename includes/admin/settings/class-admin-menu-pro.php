@@ -44,6 +44,16 @@ if ( ! class_exists( 'WPMN_Admin_Menu_Pro' ) ) :
                 WPMN_PRO_VERSION,
                 true
             );
+
+            $saved_theme  = isset( $this->settings['theme_design'] ) ? sanitize_key( $this->settings['theme_design'] ) : 'default';
+             
+            wp_localize_script( 'wpmn-admin-pro',
+				'wpmn_media_library_pro', array(
+					'ajaxUrl'  => admin_url( 'admin-ajax.php' ),
+					'nonce'    => wp_create_nonce( 'wpmn_media_nonce' ),
+                    'theme'    => $saved_theme,
+				)
+			);
         }
         
     }

@@ -33,8 +33,16 @@
     font-size: 13px;
 }
 
+.wpmn_sort_menu_item>span {
+    color: #2271b1 !important;
+}
+
 .wpmn_sort_menu_submenu li.is-active,
 .wpmn_sort_menu_nested li.is-active {
+    color: #2271b1 !important;
+}
+
+.wpmn_sort_menu_subitem.is-active>span {
     color: #2271b1 !important;
 }
 
@@ -212,4 +220,202 @@
 
 .wpmn_refresh_color:hover {
     color: #555;
+}
+
+/* --- Pro Themes --- */
+
+/* Dropbox Theme */
+.wpmn_theme_dropbox .wpmn_folder_icon,
+.wpmn_theme_dropbox .wpmn_all_files_icon,
+.wpmn_theme_dropbox .wpmn_uncategorized_icon,
+.wpmn_theme_dropbox .wpmn_search_icon {
+    filter: invert(7%) sepia(100%) saturate(5200%) hue-rotate(236deg) brightness(96%) contrast(101%);
+}
+
+.wpmn_theme_dropbox .wpmn_folder_button.is-active {
+    background-color: #e5e4fd;
+    color: #000 !important;
+}
+
+.wpmn_theme_dropbox .wpmn_rename_dashicon,
+.wpmn_theme_dropbox .wpmn_delete_dashicon {
+    color: #0061ff;
+}
+
+/* Windows Theme */
+.wpmn_theme_windows .wpmn_all_files_icon {
+    filter: invert(33%) sepia(78%) saturate(950%) hue-rotate(185deg) brightness(95%) contrast(105%);
+}
+
+.wpmn_theme_windows .wpmn_uncategorized_icon {
+    filter: invert(30%) sepia(90%) saturate(1500%) hue-rotate(100deg) brightness(85%) contrast(110%);
+}
+
+.wpmn_theme_windows .wpmn_folder_icon,
+.wpmn_theme_windows .wpmn_search_icon {
+    filter: invert(70%) sepia(80%) saturate(500%) hue-rotate(0deg) brightness(90%) contrast(110%);
+}
+
+.wpmn_theme_windows .wpmn_folder_button.is-active {
+    background-color: #cfe3f3;
+    color: #000 !important;
+}
+
+.wpmn_theme_windows .wpmn_sort_icon,
+.wpmn_theme_windows .wpmn_more_icon,
+.wpmn_theme_dropbox .wpmn_sort_icon,
+.wpmn_theme_dropbox .wpmn_more_icon {
+    filter: invert(0%) sepia(0%) saturate(100%) hue-rotate(0deg) brightness(100%) contrast(100%);
+}
+
+.wpmn_theme_windows .wpmn_media_sidebar_action_sort,
+.wpmn_theme_windows .wpmn_media_sidebar_action_more {
+    border-radius: 0 !important;
+    background: #e6e5e5;
+}
+
+.wpmn_theme_dropbox .wpmn_media_sidebar_action_sort,
+.wpmn_theme_dropbox .wpmn_media_sidebar_action_more {
+    border-radius: 0 !important;
+    background: #ffffff !important;
+}
+
+.wpmn_theme_dropbox .wpmn_media_sidebar_action_sort:hover,
+.wpmn_theme_dropbox .wpmn_media_sidebar_action_more:hover {
+    border-radius: 0 !important;
+    background: #e4e3e3;
+}
+
+.wpmn_theme_windows .wpmn_media_sidebar_action_sort:hover,
+.wpmn_theme_dropbox .wpmn_media_sidebar_action_sort:hover,
+.wpmn_theme_windows .wpmn_media_sidebar_action_more:hover,
+.wpmn_theme_dropbox .wpmn_media_sidebar_action_more:hover {
+    background: #fff !important;
+    transition: all 0.3s ease;
+}
+
+.wpmn_theme_windows .wpmn_media_sidebar_action_sort,
+.wpmn_theme_dropbox .wpmn_media_sidebar_action_sort {
+    margin-left: 36px;
+}
+
+/* Icon Switching for windows and dropbox themes */
+.wpmn_theme_windows .wpmn_new_folder_icon,
+.wpmn_theme_windows .wpmn_rename_icon,
+.wpmn_theme_windows .wpmn_delete_icon,
+.wpmn_theme_dropbox .wpmn_new_folder_icon,
+.wpmn_theme_dropbox .wpmn_rename_icon,
+.wpmn_theme_dropbox .wpmn_delete_icon {
+    display: none !important;
+}
+
+.wpmn_theme_windows .wpmn_new_folders_icon,
+.wpmn_theme_windows .wpmn_rename_dashicon,
+.wpmn_theme_windows .wpmn_delete_dashicon,
+.wpmn_theme_dropbox .wpmn_new_folders_icon,
+.wpmn_theme_dropbox .wpmn_rename_dashicon,
+.wpmn_theme_dropbox .wpmn_delete_dashicon {
+    display: inline-block !important;
+    margin-right: 5px;
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    vertical-align: middle;
+}
+
+.wpmn_theme_windows .wpmn_rename_dashicon,
+.wpmn_theme_windows .wpmn_delete_dashicon,
+.wpmn_theme_dropbox .wpmn_rename_dashicon,
+.wpmn_theme_dropbox .wpmn_delete_dashicon {
+    color: #000;
+}
+
+.wpmn_theme_windows .wpmn_new_folders_icon,
+.wpmn_theme_dropbox .wpmn_new_folders_icon {
+    margin-right: 0;
+}
+
+.wpmn_theme_dropbox .wpmn_media_sidebar_action_rename,
+.wpmn_theme_dropbox .wpmn_media_sidebar_action_delete,
+button.wpmn_media_sidebar_action_rename,
+button.wpmn_media_sidebar_action_delete {
+    color: #000;
+    border-color: #ddd;
+    border-radius: 0 !important;
+    background: #fff;
+}
+
+.wpmn_theme_dropbox .wpmn_media_sidebar_action_rename:hover,
+.wpmn_theme_dropbox .wpmn_media_sidebar_action_delete:hover,
+button.wpmn_media_sidebar_action_rename:hover,
+button.wpmn_media_sidebar_action_delete:hover {
+    background: #e4e3e3;
+    transition: all 0.3s ease;
+    border-color: #ddd;
+}
+
+.wpmn_theme_dropbox .wpmn_media_sidebar_action_rename,
+.wpmn_theme_dropbox .wpmn_media_sidebar_action_delete,
+button.wpmn_media_sidebar_action_rename,
+button.wpmn_media_sidebar_action_delete {
+    border-color: #ddd;
+    border-radius: 0 !important;
+    background: #fff;
+}
+
+.wpmn_theme_windows .wpmn_media_sidebar_action_rename,
+.wpmn_theme_windows .wpmn_media_sidebar_action_delete,
+button.wpmn_media_sidebar_action_rename,
+button.wpmn_media_sidebar_action_delete {
+    color: #000;
+    border-color: #ddd;
+    border-radius: 0 !important;
+    background: #e6e5e5;
+}
+
+.wpmn_theme_windows .wpmn_media_sidebar_action_rename:hover,
+.wpmn_theme_windows .wpmn_media_sidebar_action_delete:hover,
+button.wpmn_media_sidebar_action_rename:hover,
+button.wpmn_media_sidebar_action_delete:hover {
+    background: #fff;
+    transition: all 0.3s ease;
+    border-color: #ddd;
+}
+
+.wpmn_theme_default .wpmn_media_sidebar_action_rename,
+.wpmn_theme_default .wpmn_media_sidebar_action_delete,
+button.wpmn_media_sidebar_action_rename,
+button.wpmn_media_sidebar_action_delete {
+    border-radius: 4px !important;
+}
+
+
+.wpmn_theme_windows .wpmn_media_sidebar_action_rename:hover,
+.wpmn_theme_windows .wpmn_media_sidebar_action_delete:hover,
+.wpmn_theme_dropbox .wpmn_media_sidebar_action_rename:hover,
+.wpmn_theme_dropbox .wpmn_media_sidebar_action_delete:hover {
+    color: #000;
+}
+
+.wpmn_theme_windows .wpmn_media_sidebar_action_rename:focus,
+.wpmn_theme_windows .wpmn_media_sidebar_action_delete:focus,
+.wpmn_theme_dropbox .wpmn_media_sidebar_action_rename:focus,
+.wpmn_theme_dropbox .wpmn_media_sidebar_action_delete:focus {
+    border-color: #ddd;
+    box-shadow: none !important;
+    color: #000 !important;
+}
+
+.wpmn_theme_windows .wpmn_media_sidebar_actions,
+.wpmn_theme_dropbox .wpmn_media_sidebar_actions {
+    background: none !important;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+}
+
+.wpmn_theme_dropbox .wpmn_media_sidebar_new_folder,
+.wpmn_theme_dropbox .wpmn_media_sidebar_new_folder:hover {
+    background-color: #1203fe;
+    border-radius: 0;
 }
