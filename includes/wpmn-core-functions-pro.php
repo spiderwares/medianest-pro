@@ -33,7 +33,7 @@ if ( ! function_exists( 'wpmn_get_template_pro' ) ) :
                 'error',
                 sprintf(
                     // translators: %s: The full path to the missing template file.
-                    esc_html__( '%s does not exist.', 'medianest_pro' ),
+                    esc_html__( '%s does not exist.', 'medianest-pro' ),
                     '<code>' . esc_html( $template ) . '</code>'
                 )
             );

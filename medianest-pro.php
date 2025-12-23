@@ -9,7 +9,7 @@
  * Author URI:        https://cosmicinfosoftware.com/
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       medianest_pro
+ * Text Domain:       medianest-pro
  *
  * @package Medianest_Pro
  */

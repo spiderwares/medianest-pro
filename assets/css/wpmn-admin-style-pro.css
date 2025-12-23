@@ -92,134 +92,12 @@
     justify-content: space-between;
 }
 
-.wpmn_menu_label span:first-of-type {
-    flex-grow: 1;
-    margin-left: 8px;
-}
-
 .wpmn_menu_label .wpmn_submenu_arrow {
     font-size: 14px;
     width: 14px;
     height: 14px;
     color: #555;
     line-height: inherit;
-}
-
-/* Submenu Dropdown */
-.wpmn_color_picker_dropdown {
-    display: none;
-    position: absolute;
-    left: 100%;
-    top: -10px;
-    background: #fff;
-    border-radius: 4px;
-    padding: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    width: 230px;
-    z-index: 9999;
-    border: 1px solid #eee;
-}
-
-.wpmn_context_menu_item.has-submenu:hover .wpmn_color_picker_dropdown {
-    display: block;
-}
-
-.wpmn_color_grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 2px;
-}
-
-.wpmn_color_option {
-    width: 24px;
-    height: 24px;
-    border-radius: 3px;
-    cursor: pointer;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    transition: transform 0.1s;
-    position: relative;
-    box-sizing: border-box;
-}
-
-.wpmn_color_option:hover {
-    transform: scale(1.1);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-}
-
-.wpmn_color_option.selected::after {
-    content: "\f147";
-    font-family: dashicons;
-    color: #fff;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 18px;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-    line-height: 1;
-}
-
-.wpmn_color_picker_dropdown hr {
-    margin: 10px 0;
-    border: 0;
-    border-top: 1px solid #eee;
-}
-
-.wpmn_custom_color_row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.wpmn_current_color_preview {
-    width: 32px;
-    height: 32px;
-    border-radius: 4px;
-    background-color: #673ab7;
-    flex-shrink: 0;
-    position: relative;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.wpmn_current_color_preview::after {
-    content: "\f147";
-    font-family: dashicons;
-    color: #fff;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 20px;
-    line-height: 1;
-}
-
-.wpmn_custom_color_input {
-    flex-grow: 1;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 0 8px;
-    font-size: 13px;
-    line-height: 30px;
-    height: 30px;
-    width: auto;
-    max-width: 100px;
-}
-
-.wpmn_refresh_color {
-    color: #888;
-    cursor: pointer;
-    font-size: 18px;
-    width: 20px;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.wpmn_refresh_color:hover {
-    color: #555;
 }
 
 /* --- Pro Themes --- */
@@ -418,4 +296,100 @@ button.wpmn_media_sidebar_action_delete {
 .wpmn_theme_dropbox .wpmn_media_sidebar_new_folder:hover {
     background-color: #1203fe;
     border-radius: 0;
+}
+
+/*--------------------------- Pro Color Picker ---------------------------*/
+
+.wpmn_context_menu_item.has-submenu {
+    position: relative;
+}
+
+.wpmn_color_picker_dropdown {
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: -10px;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    padding: 12px;
+    min-width: 200px;
+    z-index: 100003;
+}
+
+.wpmn_context_menu_item.has-submenu:hover>.wpmn_color_picker_dropdown {
+    display: block;
+}
+
+.wpmn_color_grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+}
+
+.wpmn_color_option {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    transition: transform 0.1s;
+}
+
+.wpmn_color_option:hover {
+    transform: scale(1.2);
+}
+
+.wpmn_color_picker_dropdown hr {
+    margin: 12px 0;
+    border: none;
+    border-top: 1px solid #f0f0f1;
+}
+
+.wpmn_custom_color_row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.wpmn_current_color_preview {
+    width: 32px;
+    height: 32px;
+    border-radius: 5px;
+    background-color: #8f8f8f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.wpmn_current_color_preview .dashicons {
+    color: #fff;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+}
+
+.wpmn_refresh_color {
+    cursor: pointer;
+    color: #646970;
+    transition: color 0.1s;
+    font-size: 25px;
+    margin-left: 10rem;
+}
+
+.wpmn_refresh_color:hover {
+    color: #1d2327;
+}
+
+.wpmn_submenu_arrow {
+    font-size: 16px;
+    color: #a7aaad;
+}
+
+.wpmn_menu_label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
 }

@@ -24,21 +24,22 @@ if ( ! class_exists( 'WPMN_Media_Download' ) ) :
          */
         public function events_handler() {
             add_action( 'wpmn_ajax_download_folder_zip', [ $this, 'handle_folder_download' ] );
+            add_action( 'wpmn_ajax_nopriv_download_folder_zip', [ $this, 'handle_folder_download' ] );
         }
 
         public function handle_folder_download() {
             $folder_id = isset( $_POST['folder_id'] ) ? absint( $_POST['folder_id'] ) : 0;
             if ( ! $folder_id ) :
-                wp_die( esc_html__( 'Invalid folder ID.', 'medianest_pro' ) );
+                wp_die( esc_html__( 'Invalid folder ID.', 'medianest-pro' ) );
             endif;
 
             $term = get_term( $folder_id, 'wpmn_media_folder' );
             if ( ! $term || is_wp_error( $term ) ) :
-                wp_die( esc_html__( 'Folder not found.', 'medianest_pro' ) );
+                wp_die( esc_html__( 'Folder not found.', 'medianest-pro' ) );
             endif;
 
             if ( ! class_exists( 'ZipArchive' ) ) :
-                wp_die( esc_html__( 'ZipArchive class not found on your server.', 'medianest_pro' ) );
+                wp_die( esc_html__( 'ZipArchive class not found on your server.', 'medianest-pro' ) );
             endif;
 
             $zip = new ZipArchive();
@@ -46,7 +47,7 @@ if ( ! class_exists( 'WPMN_Media_Download' ) ) :
             $zip_path = get_temp_dir() . $zip_name;
 
             if ( $zip->open( $zip_path, ZipArchive::CREATE ) !== true ) :
-                wp_die( esc_html__( 'Could not create ZIP file.', 'medianest_pro' ) );
+                wp_die( esc_html__( 'Could not create ZIP file.', 'medianest-pro' ) );
             endif;
 
             $this->add_folder_to_zip( $zip, $folder_id );

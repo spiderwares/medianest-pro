@@ -54,7 +54,7 @@ final class WPMN_PRO {
     public function wpmn_admin_notice() {
         ?>
         <div class="notice notice-error">
-            <p><?php echo esc_html( 'Medianest Pro is activated but not effective — the required Medianest plugin free plugin is missing or inactive. Please install and activate the free Medianest plugin to enable all Pro features.', 'medianest_pro' ); ?></p>
+            <p><?php echo esc_html( 'Medianest Pro is activated but not effective — the required Medianest plugin free plugin is missing or inactive. Please install and activate the free Medianest plugin to enable all Pro features.', 'medianest-pro' ); ?></p>
         </div>
         <?php
     }
@@ -92,6 +92,7 @@ final class WPMN_PRO {
         require_once WPMN_PRO_PATH . 'includes/admin/settings/class-admin-menu-pro.php';
         require_once WPMN_PRO_PATH . 'includes/admin/settings/class-wpmn-media-pro.php';
         require_once WPMN_PRO_PATH . 'includes/admin/download/class-wpmn-download.php';
+        require_once WPMN_PRO_PATH . 'includes/admin/color-picker/class-wpmn-color-picker.php';
     }
 
     /**

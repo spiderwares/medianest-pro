@@ -15,17 +15,6 @@ jQuery(function ($) {
                 this.registerHooks();
                 this.applyInitialActiveStates();
             }
-            // else {
-            //     // Wait for core admin to be ready
-            //     if (typeof wp !== 'undefined' && wp.hooks) {
-            //         wp.hooks.addAction('wpmnAdminInitialized', 'medianest_pro', (admin) => {
-            //             this.admin = admin;
-            //             this.bindEvents();
-            //             this.registerHooks();
-            //             this.applyInitialActiveStates();
-            //         });
-            //     }
-            // }
         }
 
         bindEvents() {
@@ -34,26 +23,30 @@ jQuery(function ($) {
             $(document.body).on('click', '.wpmn_count_mode_item', this.handleCountMode.bind(this));
             $(document.body).on('click', '.wpmn_theme_btn', this.handleThemeToggle.bind(this));
             $(document.body).on('change', 'input[name="wpmn_settings[theme_design]"]', this.handleThemeDesign.bind(this));
+            $(document.body).on('click', '.wpmn_color_option', this.handlePresetColor.bind(this));
+            $(document.body).on('click', '.wpmn_refresh_color', this.handleResetColor.bind(this));
+            $(document.body).on('click', '.wpmn_current_color_preview', this.handlePreviewClick.bind(this));
+            $(document.body).on('mouseenter', '.wpmn_context_menu_item.has-submenu[data-action="change_color_menu"]', this.syncColorPicker.bind(this));
         }
 
         registerHooks() {
             if (typeof wp !== 'undefined' && wp.hooks) {
-                wp.hooks.addAction('wpmnFoldersLoaded', 'medianest_pro', this.applySavedSort.bind(this));
-                wp.hooks.addAction('wpmnSortFolders', 'medianest_pro', this.applySortFrom.bind(this));
+                wp.hooks.addAction('wpmnFoldersLoaded', 'medianest-pro', this.applySavedSort.bind(this));
+                wp.hooks.addAction('wpmnSortFolders', 'medianest-pro', this.applySortFrom.bind(this));
 
-                wp.hooks.addAction('wpmnFolderChanged', 'medianest_pro', (slug) => {
+                wp.hooks.addAction('wpmnFolderChanged', 'medianest-pro', (slug) => {
                     const savedFileSortBy = localStorage.getItem('wpmn_file_sort_by') || 'default';
                     const savedFileSortOrder = localStorage.getItem('wpmn_file_sort_order') || 'desc';
                     this.applySortToFiles(savedFileSortBy, savedFileSortOrder);
                 });
 
-                wp.hooks.addFilter('wpmnFoldersPayloadArgs', 'medianest_pro', (args) => {
+                wp.hooks.addFilter('wpmnFoldersPayloadArgs', 'medianest-pro', (args) => {
                     const savedCountMode = localStorage.getItem('wpmn_count_mode') || 'folder_only';
                     args.folder_count_mode = savedCountMode;
                     return args;
                 });
 
-                wp.hooks.addAction('wpmnFolderDownload', 'medianest_pro', this.handleFolderDownload.bind(this));
+                wp.hooks.addAction('wpmnFolderDownload', 'medianest-pro', this.handleFolderDownload.bind(this));
             }
         }
 
@@ -352,6 +345,110 @@ jQuery(function ($) {
                 ...folder,
                 children: folder.children ? this.sortFoldersRecursive(folder.children, order) : []
             }));
+        }
+
+        handlePresetColor(e) {
+            e.preventDefault();
+
+            const __this = $(e.currentTarget);
+            let color = __this.data('color') || __this.attr('data-color');
+            const container = __this.closest('.wpmn_color_picker_dropdown');
+
+            if (color && !color.startsWith('#')) {
+                color = '#' + color;
+            }
+
+            this.updateColorUI(container, color);
+            this.saveColor(container, color);
+        }
+
+
+        handleResetColor(e) {
+            e.preventDefault();
+
+            const __this = $(e.currentTarget).closest('.wpmn_color_picker_dropdown');
+            this.updateColorUI(__this, '');
+            this.saveColor(__this, '');
+        }
+
+        handlePreviewClick(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        syncColorPicker(e) {
+            const __this = $(e.currentTarget).find('.wpmn_color_picker_dropdown');
+            const menu = $('.wpmn_folder_context_menu');
+            const folderId = menu.attr('data-folder-id');
+            const btn = $(`.wpmn_folder_button[data-folder-id="${folderId}"]`);
+            const currentColor = btn.attr('data-color') || '';
+
+            this.updateColorUI(__this, currentColor);
+        }
+
+        updateColorUI(__this, color) {
+            const preview = __this.find('.wpmn_current_color_preview');
+            const themeColor = this.getThemeColor();
+
+            preview.css('background-color', color || themeColor);
+
+            if (!color) {
+                preview.find('.dashicons').hide();
+            } else {
+                preview.find('.dashicons').show();
+            }
+        }
+
+        getThemeColor() {
+            const settings = JSON.parse(localStorage.getItem('wpmnSettings') || '{}');
+            const theme = settings.theme || (window.wpmn_media_library_pro && window.wpmn_media_library_pro.theme) || 'default';
+
+            switch (theme) {
+                case 'dropbox':
+                    return '#0061ff';
+                case 'windows':
+                    return '#fcd133';
+                default:
+                    return '#8f8f8f';
+            }
+        }
+
+        saveColor(__this, color) {
+            const menu = __this.closest('.wpmn_folder_context_menu');
+            const folderId = menu.attr('data-folder-id');
+
+            if (!this.admin) {
+                console.error('Medianest: Admin object not initialized');
+                return;
+            }
+
+            // Ensure valid hex or empty
+            if (color && !/^#([0-9A-F]{3}){1,2}$/i.test(color)) {
+                console.error('Medianest: Invalid hex color', color);
+                return;
+            }
+
+            this.admin.apiCall('save_folder_color', {
+                folder_id: folderId,
+                color: color
+            }).then(data => {
+                if (window.wpmn_media_folder && window.wpmn_media_folder.folder) {
+                    const folderObj = window.wpmn_media_folder.folder;
+
+                    // Update the icon immediately for instant feedback
+                    const btn = $(`.wpmn_folder_button[data-folder-id="${folderId}"]`);
+                    btn.attr('data-color', color);
+                    const $icon = btn.find('.wpmn_folder_icon');
+                    if ($icon.length) {
+                        folderObj.applyIconColor($icon, color);
+                    }
+
+                    // Refresh the state (sidebar will be re-rendered)
+                    folderObj.refreshState(data);
+                }
+                this.admin.showToast(this.admin.getText('colorUpdated'));
+                $('.wpmn_folder_context_menu').prop('hidden', true).removeClass('is-visible');
+            });
         }
     }
 

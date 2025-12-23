@@ -31,13 +31,13 @@ if ( ! class_exists( 'WPMN_Settings_Pro' ) ) :
             unset($fields['theme_design']['disabled_options']);
 
             $fields['folder_count_mode'] = array(
-                'title'      => esc_html__( 'Folder Count Mode', 'medianest_pro' ),
+                'title'      => esc_html__( 'Folder Count Mode', 'medianest-pro' ),
                 'field_type' => 'wpmnselect',
                 'default'    => 'folder_only',
                 'name'       => 'wpmn_settings[folder_count_mode]',
                 'options'    => array(
-                    'folder_only'  => esc_html__( 'Count only files in this folder', 'medianest_pro' ),
-                    'all_files'    => esc_html__( 'Count files in parent and subfolders', 'medianest_pro' ),
+                    'folder_only'  => esc_html__( 'Count only files in this folder', 'medianest-pro' ),
+                    'all_files'    => esc_html__( 'Count files in parent and subfolders', 'medianest-pro' ),
                 ),
             );
 
@@ -48,14 +48,14 @@ if ( ! class_exists( 'WPMN_Settings_Pro' ) ) :
             );
 
             $fields['post_type_selection'] = array(
-                'title'         => esc_html__('Post Type Selection', 'medianest_pro'),
+                'title'         => esc_html__('Post Type Selection', 'medianest-pro'),
                 'field_type'    => 'wpmntitle',
                 'extra_class'   => 'heading',
                 'default'       => '',
             );
 
             $fields['post_types'] = array(
-                'title'      => esc_html__( 'Choose MediaNest Post Types', 'medianest_pro' ),
+                'title'      => esc_html__( 'Choose MediaNest Post Types', 'medianest-pro' ),
                 'field_type' => 'wpmncheckbox',
                 'default'    => array( '' ),
                 'name'       => 'wpmn_settings[post_types]',
