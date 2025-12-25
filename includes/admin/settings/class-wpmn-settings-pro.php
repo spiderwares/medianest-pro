@@ -72,15 +72,30 @@ if ( ! class_exists( 'WPMN_Settings_Pro' ) ) :
          */
         public static function get_post_types() {
 
-            $args = array( 'show_ui' => true );
+            $args = array(
+                'show_ui' => true,
+            );
 
-            $post_types = get_post_types($args, 'objects');
+            $exclude = array(
+                'attachment',
+                'wp_block',          // Patterns
+                'wp_navigation',     // Navigation Menus
+                'wp_template',
+                'wp_template_part',
+                'wp_global_styles',
+                'custom_css',
+                'revision',
+                'nav_menu_item',
+                'shop_order',
+                'shop_order_refund',
+            );
+
+            $post_types = get_post_types( $args, 'objects' );
             $post_type_options = array();
 
-            foreach ($post_types as $post_type) {
-                if ($post_type->name !== 'attachment') {
-                    $post_type_options[$post_type->name] = $post_type->label;
-                }
+            foreach ( $post_types as $post_type ) {
+                if ( in_array( $post_type->name, $exclude, true ) ) continue;
+                $post_type_options[ $post_type->name ] = $post_type->label;
             }
 
             return $post_type_options;

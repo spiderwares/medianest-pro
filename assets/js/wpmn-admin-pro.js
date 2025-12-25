@@ -47,6 +47,7 @@ jQuery(function ($) {
                 });
 
                 wp.hooks.addAction('wpmnFolderDownload', 'medianest-pro', this.handleFolderDownload.bind(this));
+                wp.hooks.addAction('wpmnFolderDuplicate', 'medianest-pro', this.handleFolderDuplicate.bind(this));
             }
         }
 
@@ -61,6 +62,15 @@ jQuery(function ($) {
             const form = this.admin.createForm('download_folder_zip');
             form.append($('<input>', { type: 'hidden', name: 'folder_id', value: folderId }));
             form.appendTo('body').submit().remove();
+        }
+
+        handleFolderDuplicate(folderId) {
+            this.admin.apiCall('duplicate_folder', { folder_id: folderId }).then(data => {
+                if (window.wpmn_media_folder && window.wpmn_media_folder.folder) {
+                    window.wpmn_media_folder.folder.refreshState(data);
+                }
+                this.admin.showToast(this.admin.getText('duplicated'));
+            }).catch(alert);
         }
 
         applySortFrom(sortValue) {
@@ -361,7 +371,6 @@ jQuery(function ($) {
             this.updateColorUI(container, color);
             this.saveColor(container, color);
         }
-
 
         handleResetColor(e) {
             e.preventDefault();

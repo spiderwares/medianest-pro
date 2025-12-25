@@ -40,12 +40,13 @@ if ( ! class_exists( 'WPMN_Admin_Menu_Pro' ) ) :
             wp_enqueue_script( 
                 'wpmn-admin-pro', 
                 WPMN_PRO_URL . 'assets/js/wpmn-admin-pro.js', 
-                array( 'jquery' , 'wp-hooks' ), 
+                array( 'jquery' , 'wp-hooks',  'wpmn-admin' ), 
                 WPMN_PRO_VERSION,
                 true
             );
 
-            $saved_theme  = isset( $this->settings['theme_design'] ) ? sanitize_key( $this->settings['theme_design'] ) : 'default';
+            $settings = get_option( 'wpmn_settings', [] );
+            $saved_theme  = isset( $settings['theme_design'] ) ? sanitize_key( $settings['theme_design'] ) : 'default';
              
             wp_localize_script( 'wpmn-admin-pro',
 				'wpmn_media_library_pro', array(

@@ -92,7 +92,9 @@ final class WPMN_PRO {
         require_once WPMN_PRO_PATH . 'includes/admin/settings/class-admin-menu-pro.php';
         require_once WPMN_PRO_PATH . 'includes/admin/settings/class-wpmn-media-pro.php';
         require_once WPMN_PRO_PATH . 'includes/admin/download/class-wpmn-download.php';
+        require_once WPMN_PRO_PATH . 'includes/admin/duplicate/class-wpmn-duplicate.php';
         require_once WPMN_PRO_PATH . 'includes/admin/color-picker/class-wpmn-color-picker.php';
+        require_once WPMN_PRO_PATH . 'includes/admin/settings/class-wpmn-cpt-pro.php';
     }
 
     /**

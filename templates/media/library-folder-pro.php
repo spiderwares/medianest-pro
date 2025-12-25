@@ -143,19 +143,24 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 <?php elseif ( $type === 'folder_context_menu' ) : ?>
 
+    <div class="wpmn_context_menu_item" data-action="duplicate">
+        <img src="<?php echo esc_url( WPMN_PRO_URL . 'assets/img/duplicate.svg'); ?>" alt="" class="wpmn_folder_content_duplicate" />
+        <span><?php echo esc_html__( 'Duplicate', 'medianest-pro' ); ?></span>
+    </div>
+
     <div class="wpmn_context_menu_item has-submenu" data-action="change_color_menu">
         <div class="wpmn_menu_label">
-            <img src="<?php echo esc_url( WPMN_URL . 'assets/img/color.svg'); ?>" alt="" class="wpmn_folder_content_color" />
+            <img src="<?php echo esc_url( WPMN_PRO_URL . 'assets/img/color.svg'); ?>" alt="" class="wpmn_folder_content_color" />
             <span><?php echo esc_html__( 'Change Color', 'medianest-pro' ); ?></span>
             <span class="dashicons dashicons-arrow-right-alt2 wpmn_submenu_arrow"></span>
-        </div>
+        </div>  
         <div class="wpmn_color_picker_dropdown">
             <div class="wpmn_color_grid">
                 <?php
                 $wpmn_colors = array(
-                    '#f44336', '#ff5722', '#ff9800', '#ffc107', '#ffeb3b', '#cddc39',
-                    '#2196f3', '#03a9f4', '#e3f2fd', '#4caf50', '#8bc34a', '#aed581',
-                    '#673ab7', '#9c27b0', '#b39ddb', '#e91e63', '#f06292', '#9e9e9e'
+                    '#f44336', '#ff5722', '#ff9800', '#ffc107', '#1a237e', '#311b92',
+                    '#2196f3', '#03a9f4', '#4caf50', '#8bc34a', '#673ab7', '#9c27b0', 
+                    '#b39ddb', '#e91e63', '#f06292', '#3e2723', '#9e9e9e', '#000000'
                 );
                 foreach ( $wpmn_colors as $wpmn_color ) :
                     echo '<div class="wpmn_color_option" data-color="' . esc_attr( $wpmn_color ) . '" style="background-color:' . esc_attr( $wpmn_color ) . ';"></div>';
@@ -164,16 +169,16 @@ if ( ! defined( 'ABSPATH' ) ) exit;
             </div>
             <hr>
             <div class="wpmn_custom_color_row">
-                <span class="wpmn_current_color_preview">
+                <div class="wpmn_current_color_preview">
                     <span class="dashicons dashicons-yes"></span>
-                </span>
+                </div>
                 <span class="dashicons dashicons-update wpmn_refresh_color"></span>
             </div>
         </div>
     </div>
     
     <div class="wpmn_context_menu_item" data-action="download">
-        <img src="<?php echo esc_url( WPMN_URL . 'assets/img/download.svg'); ?>" alt="" class="wpmn_folder_content_download" />
+        <img src="<?php echo esc_url( WPMN_PRO_URL . 'assets/img/download.svg'); ?>" alt="" class="wpmn_folder_content_download" />
         <span><?php echo esc_html__( 'Download', 'medianest-pro' ); ?></span>
     </div>
 
