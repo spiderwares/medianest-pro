@@ -44,5 +44,6 @@ if ( ! class_exists( 'WPMN_PRO', false ) ) :
 endif;
 
 register_activation_hook( __FILE__, array( 'WPMN_Install_Pro', 'install' ) );
+register_deactivation_hook( __FILE__, array( 'WPMN_Install_Pro', 'deactivate' ) );
 
 $GLOBALS['WPMN_Pro'] = WPMN_Pro::instance();

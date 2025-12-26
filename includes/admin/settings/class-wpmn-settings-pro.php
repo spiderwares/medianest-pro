@@ -22,11 +22,18 @@ if ( ! class_exists( 'WPMN_Settings_Pro' ) ) :
          * Initialize hooks and filters.
          */
         public function events_handler() {
-            add_filter( 'wpmn_settings_fields', [ $this, 'settings_fields_Pro' ] );
+            add_action( 'wpmn_settings_tabs', [ $this, 'add_pro_tabs' ] );
+            add_action( 'wpmn_render_post_type_tab_content', [ $this, 'render_post_type_tab' ] );
+            add_filter( 'wpmn_settings_fields', [ $this, 'settings_fields_pro' ] );
+            add_filter( 'wpmn_post_type_fields', [ $this, 'post_type_field_pro' ], 10, 4 );
             add_filter( 'wpmn_checkbox_field', [ $this, 'load_checkbox_field' ], 10, 4 );
         }
 
-        public function settings_fields_Pro( $fields ) {
+        public function add_pro_tabs( $active_tab ) {
+            include WPMN_PRO_PATH . 'includes/admin/settings/views/file-menu-pro.php';
+        }
+
+        public function settings_fields_pro( $fields ) {
 
             unset($fields['theme_design']['disabled_options']);
 
@@ -46,22 +53,22 @@ if ( ! class_exists( 'WPMN_Settings_Pro' ) ) :
                 'windows'  => 'windows.svg',
                 'dropbox'  => 'dropbox.svg',
             );
+        
+            return $fields;
+        }
 
-            $fields['post_type_selection'] = array(
-                'title'         => esc_html__('Post Type Selection', 'medianest-pro'),
-                'field_type'    => 'wpmntitle',
-                'extra_class'   => 'heading',
-                'default'       => '',
-            );
+        public function post_type_field_pro( $fields ) {
+            // Ensure fields is an array
+            $fields = is_array( $fields ) ? $fields : [];
 
             $fields['post_types'] = array(
-                'title'      => esc_html__( 'Choose MediaNest Post Types', 'medianest-pro' ),
+                'title'      => esc_html__( 'Choose MediaNest Post Types', 'medianest' ),
                 'field_type' => 'wpmncheckbox',
                 'default'    => array( '' ),
                 'name'       => 'wpmn_settings[post_types]',
-                'options'    => self::get_post_types(),
+                'options'    => $this->get_post_types(),
             );
-        
+            
             return $fields;
         }
 
@@ -93,13 +100,15 @@ if ( ! class_exists( 'WPMN_Settings_Pro' ) ) :
             $post_types = get_post_types( $args, 'objects' );
             $post_type_options = array();
 
-            foreach ( $post_types as $post_type ) {
+            foreach ( $post_types as $post_type ) :
                 if ( in_array( $post_type->name, $exclude, true ) ) continue;
-                $post_type_options[ $post_type->name ] = $post_type->label;
-            }
+                $label = ! empty( $post_type->labels->menu_name ) ? $post_type->labels->menu_name : $post_type->label;
+                $post_type_options[ $post_type->name ] = $label;
+            endforeach;
 
             return $post_type_options;
         }
+
 
         public function load_checkbox_field( $wpmn_html, $wpmn_field, $wpmn_field_Val, $wpmn_field_Key ) {
             

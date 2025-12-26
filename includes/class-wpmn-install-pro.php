@@ -33,6 +33,28 @@ if ( ! class_exists( 'WPMN_Install_Pro' ) ) :
             if ( ! is_blog_installed() ) :
                 return;
             endif;
+
+            // Restore post types from backup if exists
+            $backup = get_option( 'wpmn_pro_post_types_backup' );
+            if ( $backup ) {
+                $settings = get_option( 'wpmn_settings', [] );
+                $settings['post_types'] = $backup;
+                update_option( 'wpmn_settings', $settings );
+            }
+        }
+
+        /**
+         * Deactivate plugin.
+         */
+        public static function deactivate() {
+            $settings = get_option( 'wpmn_settings', [] );
+            
+            // Backup and remove post types on deactivation
+            if ( isset( $settings['post_types'] ) ) {
+                update_option( 'wpmn_pro_post_types_backup', $settings['post_types'] );
+                unset( $settings['post_types'] );
+                update_option( 'wpmn_settings', $settings );
+            }
         }
 
         /**

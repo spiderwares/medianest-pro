@@ -17,6 +17,12 @@ jQuery(function ($) {
             }
         }
 
+        // Helper to get post-type specific storage key
+        getStorageKey(key) {
+            const postType = this.admin.getPostType();
+            return `wpmn_${postType}_${key}`;
+        }
+
         bindEvents() {
             $(document.body).on('click', '.wpmn_sort_folder_option', this.handleSortFolders.bind(this));
             $(document.body).on('click', '.wpmn_sort_files_option', this.handleSortFiles.bind(this));
@@ -35,13 +41,13 @@ jQuery(function ($) {
                 wp.hooks.addAction('wpmnSortFolders', 'medianest-pro', this.applySortFrom.bind(this));
 
                 wp.hooks.addAction('wpmnFolderChanged', 'medianest-pro', (slug) => {
-                    const savedFileSortBy = localStorage.getItem('wpmn_file_sort_by') || 'default';
-                    const savedFileSortOrder = localStorage.getItem('wpmn_file_sort_order') || 'desc';
+                    const savedFileSortBy = localStorage.getItem(this.getStorageKey('file_sort_by')) || 'default';
+                    const savedFileSortOrder = localStorage.getItem(this.getStorageKey('file_sort_order')) || 'desc';
                     this.applySortToFiles(savedFileSortBy, savedFileSortOrder);
                 });
 
                 wp.hooks.addFilter('wpmnFoldersPayloadArgs', 'medianest-pro', (args) => {
-                    const savedCountMode = localStorage.getItem('wpmn_count_mode') || 'folder_only';
+                    const savedCountMode = localStorage.getItem(this.getStorageKey('count_mode')) || 'folder_only';
                     args.folder_count_mode = savedCountMode;
                     return args;
                 });
@@ -53,12 +59,9 @@ jQuery(function ($) {
 
         handleFolderDownload(folderId) {
             if (!folderId) return;
-
-            // Show toast message
             if (this.admin) {
                 this.admin.showToast(this.admin.getText('generatingZip'));
             }
-
             const form = this.admin.createForm('download_folder_zip');
             form.append($('<input>', { type: 'hidden', name: 'folder_id', value: folderId }));
             form.appendTo('body').submit().remove();
@@ -82,9 +85,7 @@ jQuery(function ($) {
             if (sortValue !== 'default') {
                 const [field, order] = sortValue.split('-');
                 if (!field || !order) return;
-
                 wpOrder = order.toUpperCase();
-
                 if (field === 'title') orderby = 'title';
                 if (field === 'date') orderby = 'date';
                 if (field === 'modified') orderby = 'modified';
@@ -96,45 +97,42 @@ jQuery(function ($) {
                     const frame = wp.media.frame;
                     const library = frame.state().get('library');
                     if (library) {
-                        library.props.set({
-                            orderby: orderby,
-                            order: wpOrder
-                        });
-
+                        library.props.set({ orderby: orderby, order: wpOrder });
                         if (library.mirroring) {
                             library.mirroring.setProps(library.props.toJSON());
                         }
                         library.fetch();
                     }
-                } catch (e) {
-                }
+                } catch (e) { }
             }
         }
 
         applyInitialActiveStates() {
             // Folders
-            const savedFolderSort = localStorage.getItem('wpmn_folder_sort') || 'default';
+            const savedFolderSort = localStorage.getItem(this.getStorageKey('folder_sort')) || 'default';
             this.updateSelectedBySort('folder', savedFolderSort);
 
             // Files
-            const savedFileSortBy = localStorage.getItem('wpmn_file_sort_by') || 'default';
-            const savedFileSortOrder = localStorage.getItem('wpmn_file_sort_order') || 'desc';
+            const savedFileSortBy = localStorage.getItem(this.getStorageKey('file_sort_by')) || 'default';
+            const savedFileSortOrder = localStorage.getItem(this.getStorageKey('file_sort_order')) || 'desc';
             this.updateSelectedBySort('file', savedFileSortBy, savedFileSortOrder);
 
             // Count Mode
-            const savedCountMode = localStorage.getItem('wpmn_count_mode') || 'folder_only';
+            const savedCountMode = localStorage.getItem(this.getStorageKey('count_mode')) || 'folder_only';
             const $countItem = $(`.wpmn_count_mode_item[data-mode="${savedCountMode}"]`);
             if ($countItem.length) {
                 this.updateCountModeUI($countItem);
             }
 
-            // Theme
+            // Theme (Global across site)
             const settings = JSON.parse(localStorage.getItem('wpmnSettings') || '{}');
             this.applyTheme(settings.theme || (window.wpmn_media_library_pro && window.wpmn_media_library_pro.theme) || 'default');
 
-            // Apply logic
             this.applySortToFolders(savedFolderSort);
-            this.applySortToFiles(savedFileSortBy, savedFileSortOrder);
+
+            if (typeof wp !== 'undefined' && wp.media && wp.media.frame) {
+                this.applySortToFiles(savedFileSortBy, savedFileSortOrder);
+            }
         }
 
         handleSortFolders(e) {
@@ -142,7 +140,7 @@ jQuery(function ($) {
             const __this = $(e.currentTarget);
             const sortType = __this.data('sort');
 
-            localStorage.setItem('wpmn_folder_sort', sortType);
+            localStorage.setItem(this.getStorageKey('folder_sort'), sortType);
             this.updateSelected(__this);
             this.applySortToFolders(sortType);
             __this.closest('.wpmn_sort_menu').prop('hidden', true);
@@ -154,8 +152,8 @@ jQuery(function ($) {
             const sortBy = __this.data('sort-by');
             const sortOrder = __this.data('sort-order');
 
-            localStorage.setItem('wpmn_file_sort_by', sortBy);
-            localStorage.setItem('wpmn_file_sort_order', sortOrder);
+            localStorage.setItem(this.getStorageKey('file_sort_by'), sortBy);
+            localStorage.setItem(this.getStorageKey('file_sort_order'), sortOrder);
 
             this.updateSelected(__this);
             this.applySortToFiles(sortBy, sortOrder);
@@ -167,7 +165,7 @@ jQuery(function ($) {
             const __this = $(e.currentTarget);
             const mode = __this.data('mode') || 'folder_only';
 
-            localStorage.setItem('wpmn_count_mode', mode);
+            localStorage.setItem(this.getStorageKey('count_mode'), mode);
             this.updateCountModeUI(__this);
 
             if (this.admin) {
@@ -200,7 +198,6 @@ jQuery(function ($) {
             if (this.admin) {
                 this.admin.apiCall('save_settings', { theme_design: theme });
             }
-
             this.applyTheme(theme);
         }
 
@@ -215,7 +212,6 @@ jQuery(function ($) {
             if (this.admin) {
                 this.admin.apiCall('save_settings', { theme_design: val });
             }
-
             this.applyTheme(theme);
         }
 
@@ -227,7 +223,6 @@ jQuery(function ($) {
                     sidebar.addClass('wpmn_theme_' + theme);
                 }
             }
-
             $('.wpmn_theme_btn').removeClass('wpmn_theme_btn--active');
             $(`.wpmn_theme_btn[data-theme="${theme}"]`).addClass('wpmn_theme_btn--active');
         }
@@ -262,7 +257,11 @@ jQuery(function ($) {
         }
 
         applySortToFiles(sortBy, sortOrder) {
-            if (typeof wp !== 'undefined' && wp.media && wp.media.frame) {
+            const isGridView = typeof wp !== 'undefined' && wp.media && wp.media.frame;
+            const isUploadList = window.location.pathname.includes('upload.php') && !window.location.search.includes('mode=grid');
+            const isEditList = window.location.pathname.includes('edit.php');
+
+            if (isGridView) {
                 try {
                     const frame = wp.media.frame;
                     const state = typeof frame.state === 'function' ? frame.state() : frame.state;
@@ -273,19 +272,23 @@ jQuery(function ($) {
                             const orderbyField = sortBy === 'default' ? 'date' : this.getOrderByField(sortBy);
                             const orderDir = sortBy === 'default' ? 'DESC' : sortOrder.toUpperCase();
 
-                            library.props.set({
-                                orderby: orderbyField,
-                                order: orderDir
-                            });
-
+                            library.props.set({ orderby: orderbyField, order: orderDir });
                             if (library.mirroring) {
                                 library.mirroring.setProps(library.props.toJSON());
                             }
-
                             library.fetch();
                         }
                     }
-                } catch (err) {
+                } catch (err) { }
+            } else if (isUploadList || isEditList) {
+                const url = new URL(window.location.href);
+                const orderbyField = this.getOrderByField(sortBy);
+                const orderDir = sortOrder.toUpperCase();
+
+                if (url.searchParams.get('orderby') !== orderbyField || url.searchParams.get('order') !== orderDir) {
+                    url.searchParams.set('orderby', orderbyField);
+                    url.searchParams.set('order', orderDir);
+                    window.location.href = url.toString();
                 }
             }
         }
@@ -302,18 +305,19 @@ jQuery(function ($) {
         }
 
         applySavedSort() {
-            // Folders
-            const savedFolderSort = localStorage.getItem('wpmn_folder_sort') || 'default';
+            const savedFolderSort = localStorage.getItem(this.getStorageKey('folder_sort')) || 'default';
             this.updateSelectedBySort('folder', savedFolderSort);
             if (savedFolderSort !== 'default') {
                 this.applySortToFolders(savedFolderSort);
             }
 
-            // Files
-            const savedFileSortBy = localStorage.getItem('wpmn_file_sort_by') || 'default';
-            const savedFileSortOrder = localStorage.getItem('wpmn_file_sort_order') || 'desc';
+            const savedFileSortBy = localStorage.getItem(this.getStorageKey('file_sort_by')) || 'default';
+            const savedFileSortOrder = localStorage.getItem(this.getStorageKey('file_sort_order')) || 'desc';
             this.updateSelectedBySort('file', savedFileSortBy, savedFileSortOrder);
-            this.applySortToFiles(savedFileSortBy, savedFileSortOrder);
+
+            if (typeof wp !== 'undefined' && wp.media && wp.media.frame) {
+                this.applySortToFiles(savedFileSortBy, savedFileSortOrder);
+            }
         }
 
         updateSelectedBySort(type, sortVal, orderVal = null) {
@@ -339,7 +343,6 @@ jQuery(function ($) {
                     $parentItem.addClass('is-active');
                 }
             }
-
             __this.addClass('is-active').find('.wpmn_check_icon').show();
         }
 
@@ -350,7 +353,6 @@ jQuery(function ($) {
                 const comparison = nameA.localeCompare(nameB);
                 return order === 'asc' ? comparison : -comparison;
             });
-
             return sorted.map(folder => ({
                 ...folder,
                 children: folder.children ? this.sortFoldersRecursive(folder.children, order) : []
@@ -359,31 +361,22 @@ jQuery(function ($) {
 
         handlePresetColor(e) {
             e.preventDefault();
-
             const __this = $(e.currentTarget);
             let color = __this.data('color') || __this.attr('data-color');
             const container = __this.closest('.wpmn_color_picker_dropdown');
-
-            if (color && !color.startsWith('#')) {
-                color = '#' + color;
-            }
-
+            if (color && !color.startsWith('#')) color = '#' + color;
             this.updateColorUI(container, color);
             this.saveColor(container, color);
         }
 
         handleResetColor(e) {
             e.preventDefault();
-
             const __this = $(e.currentTarget).closest('.wpmn_color_picker_dropdown');
             this.updateColorUI(__this, '');
             this.saveColor(__this, '');
         }
 
-        handlePreviewClick(e) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
+        handlePreviewClick(e) { e.preventDefault(); e.stopPropagation(); }
 
         syncColorPicker(e) {
             const __this = $(e.currentTarget).find('.wpmn_color_picker_dropdown');
@@ -391,68 +384,38 @@ jQuery(function ($) {
             const folderId = menu.attr('data-folder-id');
             const btn = $(`.wpmn_folder_button[data-folder-id="${folderId}"]`);
             const currentColor = btn.attr('data-color') || '';
-
             this.updateColorUI(__this, currentColor);
         }
 
         updateColorUI(__this, color) {
             const preview = __this.find('.wpmn_current_color_preview');
             const themeColor = this.getThemeColor();
-
             preview.css('background-color', color || themeColor);
-
-            if (!color) {
-                preview.find('.dashicons').hide();
-            } else {
-                preview.find('.dashicons').show();
-            }
+            if (!color) preview.find('.dashicons').hide();
+            else preview.find('.dashicons').show();
         }
 
         getThemeColor() {
             const settings = JSON.parse(localStorage.getItem('wpmnSettings') || '{}');
             const theme = settings.theme || (window.wpmn_media_library_pro && window.wpmn_media_library_pro.theme) || 'default';
-
             switch (theme) {
-                case 'dropbox':
-                    return '#0061ff';
-                case 'windows':
-                    return '#fcd133';
-                default:
-                    return '#8f8f8f';
+                case 'dropbox': return '#0061ff';
+                case 'windows': return '#fcd133';
+                default: return '#8f8f8f';
             }
         }
 
         saveColor(__this, color) {
             const menu = __this.closest('.wpmn_folder_context_menu');
             const folderId = menu.attr('data-folder-id');
-
-            if (!this.admin) {
-                console.error('Medianest: Admin object not initialized');
-                return;
-            }
-
-            // Ensure valid hex or empty
-            if (color && !/^#([0-9A-F]{3}){1,2}$/i.test(color)) {
-                console.error('Medianest: Invalid hex color', color);
-                return;
-            }
-
-            this.admin.apiCall('save_folder_color', {
-                folder_id: folderId,
-                color: color
-            }).then(data => {
+            if (!this.admin) return;
+            this.admin.apiCall('save_folder_color', { folder_id: folderId, color: color }).then(data => {
                 if (window.wpmn_media_folder && window.wpmn_media_folder.folder) {
                     const folderObj = window.wpmn_media_folder.folder;
-
-                    // Update the icon immediately for instant feedback
                     const btn = $(`.wpmn_folder_button[data-folder-id="${folderId}"]`);
                     btn.attr('data-color', color);
                     const $icon = btn.find('.wpmn_folder_icon');
-                    if ($icon.length) {
-                        folderObj.applyIconColor($icon, color);
-                    }
-
-                    // Refresh the state (sidebar will be re-rendered)
+                    if ($icon.length) folderObj.applyIconColor($icon, color);
                     folderObj.refreshState(data);
                 }
                 this.admin.showToast(this.admin.getText('colorUpdated'));

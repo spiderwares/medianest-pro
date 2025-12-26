@@ -9,9 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 <td>
     <div class="wpmn_checkbox_field">
-        <?php if ( isset( $field['options'] ) && is_array( $field['options'] ) ) : ?>
-
-            <?php
+        <?php if ( isset( $field['options'] ) && is_array( $field['options'] ) ) :
             $wpmn_current_values = isset( $field_Val ) ? $field_Val : ( $field['default'] ?? array() );
             if ( ! is_array( $wpmn_current_values ) ) :
                 $wpmn_current_values = array();
@@ -36,7 +34,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
                         <?php echo esc_html( $wpmn_option_label ); ?>
                     </label>
                 </div>
-
             <?php endforeach;
         endif; ?>
     </div>

@@ -44,12 +44,17 @@ if ( ! class_exists( 'WPMN_Media_Pro' ) ) :
 
             if ( ! isset( $map[ $current_filter ] ) ) return $output;
 
+            $screen = get_current_screen();
+            // Check if we are in the media library (attachment post type)
+            $is_attachment = ( $screen && $screen->post_type === 'attachment' );
+
             ob_start();
 
             wpmn_get_template_pro(
                 'media/library-folder-pro.php',
                 array(
                     'type' => $map[ $current_filter ],
+                    'is_attachment' => $is_attachment,
                 )
             );
 
