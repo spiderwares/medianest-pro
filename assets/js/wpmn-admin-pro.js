@@ -17,7 +17,6 @@ jQuery(function ($) {
             }
         }
 
-        // Helper to get post-type specific storage key
         getStorageKey(key) {
             const postType = this.admin.getPostType();
             return `wpmn_${postType}_${key}`;
@@ -33,6 +32,7 @@ jQuery(function ($) {
             $(document.body).on('click', '.wpmn_refresh_color', this.handleResetColor.bind(this));
             $(document.body).on('click', '.wpmn_current_color_preview', this.handlePreviewClick.bind(this));
             $(document.body).on('mouseenter', '.wpmn_context_menu_item.has-submenu[data-action="change_color_menu"]', this.syncColorPicker.bind(this));
+            $(document.body).on('click', '.wpmn_more_menu_item[data-action="collapse-all"]', this.toggleCollapseAll.bind(this));
         }
 
         registerHooks() {
@@ -52,8 +52,103 @@ jQuery(function ($) {
                     return args;
                 });
 
+                // Pro version specific hooks
                 wp.hooks.addAction('wpmnFolderDownload', 'medianest-pro', this.handleFolderDownload.bind(this));
                 wp.hooks.addAction('wpmnFolderDuplicate', 'medianest-pro', this.handleFolderDuplicate.bind(this));
+                wp.hooks.addAction('wpmnFolderPin', 'medianest-pro', this.handleFolderPin.bind(this));
+                wp.hooks.addAction('wpmnShowContextMenu', 'medianest-pro', this.syncContextMenu.bind(this));
+            }
+        }
+
+        syncContextMenu(menu, folderId) {
+            const folder = window.wpmn_media_folder.folder.findFolderById(folderId, this.admin.state.folders);
+            if (!folder) return;
+
+            const pinItem = menu.find('[data-action="pin-folder"]');
+            if (pinItem.length) {
+                const isPinned = !!folder.is_pinned;
+                const text = isPinned ? pinItem.data('text-unpin') : pinItem.data('text-pin');
+                const icon = isPinned ? pinItem.data('icon-unpin') : pinItem.data('icon-pin');
+
+                pinItem.find('span').last().text(text);
+                pinItem.find('.dashicons').attr('class', 'dashicons ' + icon);
+            }
+
+            // Sync Color Picker
+            const btn = $(`.wpmn_folder_button[data-folder-id="${folderId}"]`);
+            const currentColor = btn.attr('data-color') || '';
+            const colorDropdown = menu.find('.wpmn_color_picker_dropdown');
+            if (colorDropdown.length) {
+                this.updateColorUI(colorDropdown, currentColor);
+            }
+        }
+
+        handleFolderPin(folderId) {
+            if (!folderId) return;
+            const folder = window.wpmn_media_folder.folder.findFolderById(folderId, this.admin.state.folders);
+            if (!folder) return;
+
+            const action = folder.is_pinned ? 'unpin_folder' : 'pin_folder';
+
+            this.admin.apiCall(action, { folder_id: folderId }).then(data => {
+                window.wpmn_media_folder.folder.refreshState(data);
+                this.admin.showToast(folder.is_pinned ? 'Unpinned from top' : 'Pinned to top');
+            }).catch(alert);
+        }
+
+        toggleCollapseAll(e) {
+            e.preventDefault();
+            const __this = $(e.currentTarget);
+
+            if (typeof this.admin.allCollapsed === 'undefined') {
+                this.admin.allCollapsed = false;
+            }
+
+            this.admin.allCollapsed = !this.admin.allCollapsed;
+
+            const text = this.admin.allCollapsed ? __this.data('text-show') : __this.data('text-hide');
+            const icon = this.admin.allCollapsed ? __this.data('icon-show') : __this.data('icon-hide');
+
+            __this.find('span').last().text(text);
+            __this.find('.dashicons').attr('class', 'dashicons ' + icon);
+
+            const allFolders = $('#wpmn_media_sidebar .wpmn_folder_node');
+            const allIds = {};
+
+            if (this.admin.allCollapsed) {
+                // Collapse All
+                allFolders.attr('aria-expanded', 'false').children('ul').slideUp(300);
+                this.admin.setStorage('wpmnExpandedFolders', JSON.stringify({}));
+            } else {
+                // Expand All
+                allFolders.attr('aria-expanded', 'true').children('ul').slideDown(300);
+                allFolders.each((i, el) => {
+                    const btn = $(el).find('.wpmn_folder_button').first();
+                    const id = btn.data('folder-id');
+                    if (id) allIds[id] = true;
+                });
+                this.admin.setStorage('wpmnExpandedFolders', JSON.stringify(allIds));
+            }
+
+            localStorage.setItem(this.getStorageKey('is_all_collapsed'), this.admin.allCollapsed ? '1' : '0');
+            $('.wpmn_more_menu').prop('hidden', true);
+        }
+
+        restoreCollapse() {
+            const savedState = localStorage.getItem(this.getStorageKey('is_all_collapsed'));
+            const collapsed = savedState === '1';
+
+            if (this.admin) {
+                this.admin.allCollapsed = collapsed;
+            }
+
+            const __this = $('.wpmn_more_menu_item[data-action="collapse-all"]');
+            if (__this.length) {
+                const text = collapsed ? __this.data('text-show') : __this.data('text-hide');
+                const icon = collapsed ? __this.data('icon-show') : __this.data('icon-hide');
+
+                __this.find('span').last().text(text);
+                __this.find('.dashicons').attr('class', 'dashicons ' + icon);
             }
         }
 
@@ -62,9 +157,11 @@ jQuery(function ($) {
             if (this.admin) {
                 this.admin.showToast(this.admin.getText('generatingZip'));
             }
-            const form = this.admin.createForm('download_folder_zip');
-            form.append($('<input>', { type: 'hidden', name: 'folder_id', value: folderId }));
-            form.appendTo('body').submit().remove();
+            if (typeof this.admin.createForm === 'function') {
+                const form = this.admin.createForm('download_folder_zip');
+                form.append($('<input>', { type: 'hidden', name: 'folder_id', value: folderId }));
+                form.appendTo('body').submit().remove();
+            }
         }
 
         handleFolderDuplicate(folderId) {
@@ -109,8 +206,8 @@ jQuery(function ($) {
 
         applyInitialActiveStates() {
             // Folders
-            const savedFolderSort = localStorage.getItem(this.getStorageKey('folder_sort')) || 'default';
-            this.updateSelectedBySort('folder', savedFolderSort);
+            const folderSort = localStorage.getItem(this.getStorageKey('folder_sort')) || 'default';
+            this.updateSelectedBySort('folder', folderSort);
 
             // Files
             const savedFileSortBy = localStorage.getItem(this.getStorageKey('file_sort_by')) || 'default';
@@ -124,11 +221,12 @@ jQuery(function ($) {
                 this.updateCountModeUI($countItem);
             }
 
-            // Theme (Global across site)
+            // Theme
             const settings = JSON.parse(localStorage.getItem('wpmnSettings') || '{}');
             this.applyTheme(settings.theme || (window.wpmn_media_library_pro && window.wpmn_media_library_pro.theme) || 'default');
 
-            this.applySortToFolders(savedFolderSort);
+            this.restoreCollapse();
+            this.applySortToFolders(folderSort);
 
             if (typeof wp !== 'undefined' && wp.media && wp.media.frame) {
                 this.applySortToFiles(savedFileSortBy, savedFileSortOrder);
@@ -305,10 +403,10 @@ jQuery(function ($) {
         }
 
         applySavedSort() {
-            const savedFolderSort = localStorage.getItem(this.getStorageKey('folder_sort')) || 'default';
-            this.updateSelectedBySort('folder', savedFolderSort);
-            if (savedFolderSort !== 'default') {
-                this.applySortToFolders(savedFolderSort);
+            const folderSort = localStorage.getItem(this.getStorageKey('folder_sort')) || 'default';
+            this.updateSelectedBySort('folder', folderSort);
+            if (folderSort !== 'default') {
+                this.applySortToFolders(folderSort);
             }
 
             const savedFileSortBy = localStorage.getItem(this.getStorageKey('file_sort_by')) || 'default';
@@ -348,6 +446,9 @@ jQuery(function ($) {
 
         sortFoldersRecursive(folders, order) {
             const sorted = [...folders].sort((a, b) => {
+                if (a.is_pinned !== b.is_pinned) {
+                    return b.is_pinned ? 1 : -1;
+                }
                 const nameA = a.name.toLowerCase();
                 const nameB = b.name.toLowerCase();
                 const comparison = nameA.localeCompare(nameB);

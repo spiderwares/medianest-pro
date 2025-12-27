@@ -28,6 +28,7 @@ if ( ! class_exists( 'WPMN_Media_Pro' ) ) :
             add_filter( 'wpmn_theme_buttons', [ $this, 'sort_menu_items' ], 10, 2 );
             add_filter( 'wpmn_folder_context_menu', [ $this, 'sort_menu_items' ], 10, 2 );
             add_filter( 'wpmn_default_folder', [ $this, 'sort_menu_items' ], 10, 2 );
+            add_filter( 'wpmn_collapsed_menu_item', [ $this, 'sort_menu_items' ], 10, 2 );
         }
 
         public function sort_menu_items( $output, $args ) {
@@ -38,6 +39,7 @@ if ( ! class_exists( 'WPMN_Media_Pro' ) ) :
                 'wpmn_theme_buttons'       => 'theme_buttons',
                 'wpmn_folder_context_menu' => 'folder_context_menu',
                 'wpmn_default_folder'      => 'default_folder',
+                'wpmn_collapsed_menu_item' => 'collapsed_menu_item',
             );
 
             $current_filter = current_filter();

@@ -146,7 +146,16 @@ if ( ! defined( 'ABSPATH' ) ) exit;
     </button>
 
 <?php elseif ( $type === 'folder_context_menu' ) : ?>
-
+    
+    <div class="wpmn_context_menu_item" data-action="pin-folder"
+        data-text-pin="<?php echo esc_attr__( 'Pin to Top', 'medianest-pro' ); ?>"
+        data-text-unpin="<?php echo esc_attr__( 'Unpin from Top', 'medianest-pro' ); ?>"
+        data-icon-pin="dashicons-admin-post"
+        data-icon-unpin="dashicons-sticky">
+        <span class="dashicons dashicons-admin-post"></span>
+        <span><?php echo esc_html__( 'Pin to Top', 'medianest-pro' ); ?></span>
+    </div>
+    
     <div class="wpmn_context_menu_item" data-action="duplicate">
         <img src="<?php echo esc_url( WPMN_PRO_URL . 'assets/img/duplicate.svg'); ?>" alt="" class="wpmn_folder_content_duplicate" />
         <span><?php echo esc_html__( 'Duplicate', 'medianest-pro' ); ?></span>
@@ -188,5 +197,15 @@ if ( ! defined( 'ABSPATH' ) ) exit;
     </div>
     <?php endif; ?>
 
-<?php endif; ?>
+<?php elseif ( $type === 'collapsed_menu_item' ) : ?>
 
+    <li class="wpmn_more_menu_item" data-action="collapse-all"
+        data-text-hide="<?php echo esc_attr__( 'Collapse all', 'medianest' ); ?>"
+        data-text-show="<?php echo esc_attr__( 'Expand all', 'medianest' ); ?>"
+        data-icon-hide="dashicons-editor-contract"
+        data-icon-show="dashicons-editor-expand">
+        <span class="dashicons dashicons-editor-contract"></span>
+        <span><?php echo esc_html__( 'Collapse all', 'medianest' ); ?></span>
+    </li>
+
+<?php endif; ?>
