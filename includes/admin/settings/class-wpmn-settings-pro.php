@@ -62,7 +62,7 @@ if ( ! class_exists( 'WPMN_Settings_Pro' ) ) :
             $fields = is_array( $fields ) ? $fields : [];
 
             $fields['post_types'] = array(
-                'title'      => esc_html__( 'Choose MediaNest Post Types', 'medianest' ),
+                'title'      => esc_html__( 'Choose MediaNest Post Types', 'medianest-pro' ),
                 'field_type' => 'wpmncheckbox',
                 'default'    => array( '' ),
                 'name'       => 'wpmn_settings[post_types]',

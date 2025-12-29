@@ -26,78 +26,78 @@ if ( ! defined( 'ABSPATH' ) ) exit;
     </li>
 
     <li class="wpmn_sort_menu_item has-submenu">
-        <span><?php echo esc_html__( 'Sort Files', 'medianest' ); ?></span>
+        <span><?php echo esc_html__( 'Sort Files', 'medianest-pro' ); ?></span>
         <span class="dashicons dashicons-arrow-right-alt2"></span>
         <ul class="wpmn_sort_menu_submenu">
             <li class="wpmn_sort_menu_subitem has-nested">
-                <span><?php echo esc_html__( 'By Name', 'medianest' ); ?></span>
+                <span><?php echo esc_html__( 'By Name', 'medianest-pro' ); ?></span>
                 <span class="dashicons dashicons-arrow-right-alt2"></span>
                 <ul class="wpmn_sort_menu_nested">
                     <li class="wpmn_sort_files_option" data-sort-by="name" data-sort-order="asc">
                         <span class="dashicons dashicons-yes wpmn_check_icon"></span>
-                        <?php echo esc_html__( 'Ascending', 'medianest' ); ?>
+                        <?php echo esc_html__( 'Ascending', 'medianest-pro' ); ?>
                     </li>
                     <li class="wpmn_sort_files_option" data-sort-by="name" data-sort-order="desc">
                         <span class="dashicons dashicons-yes wpmn_check_icon"></span>
-                        <?php echo esc_html__( 'Descending', 'medianest' ); ?>
+                        <?php echo esc_html__( 'Descending', 'medianest-pro' ); ?>
                     </li>
                 </ul>
             </li>
             <li class="wpmn_sort_menu_subitem has-nested">
-                <span><?php echo esc_html__( 'By Date', 'medianest' ); ?></span>
+                <span><?php echo esc_html__( 'By Date', 'medianest-pro' ); ?></span>
                 <span class="dashicons dashicons-arrow-right-alt2"></span>
                 <ul class="wpmn_sort_menu_nested">
                     <li class="wpmn_sort_files_option" data-sort-by="date" data-sort-order="asc">
                         <span class="dashicons dashicons-yes wpmn_check_icon"></span>
-                        <?php echo esc_html__( 'Ascending', 'medianest' ); ?>
+                        <?php echo esc_html__( 'Ascending', 'medianest-pro' ); ?>
                     </li>
                     <li class="wpmn_sort_files_option" data-sort-by="date" data-sort-order="desc">
                         <span class="dashicons dashicons-yes wpmn_check_icon"></span>
-                        <?php echo esc_html__( 'Descending', 'medianest' ); ?>
+                        <?php echo esc_html__( 'Descending', 'medianest-pro' ); ?>
                     </li>
                 </ul>
             </li>
             <li class="wpmn_sort_menu_subitem has-nested">
-                <span><?php echo esc_html__( 'By Modified', 'medianest' ); ?></span>
+                <span><?php echo esc_html__( 'By Modified', 'medianest-pro' ); ?></span>
                 <span class="dashicons dashicons-arrow-right-alt2"></span>
                 <ul class="wpmn_sort_menu_nested">
                     <li class="wpmn_sort_files_option" data-sort-by="modified" data-sort-order="asc">
                         <span class="dashicons dashicons-yes wpmn_check_icon"></span>
-                        <?php echo esc_html__( 'Ascending', 'medianest' ); ?>
+                        <?php echo esc_html__( 'Ascending', 'medianest-pro' ); ?>
                     </li>
                     <li class="wpmn_sort_files_option" data-sort-by="modified" data-sort-order="desc">
                         <span class="dashicons dashicons-yes wpmn_check_icon"></span>
-                        <?php echo esc_html__( 'Descending', 'medianest' ); ?>
+                        <?php echo esc_html__( 'Descending', 'medianest-pro' ); ?>
                     </li>
                 </ul>
             </li>
             
             <?php if ( $is_attachment ) : ?>
             <li class="wpmn_sort_menu_subitem has-nested">
-                <span><?php echo esc_html__( 'By Author', 'medianest' ); ?></span>
+                <span><?php echo esc_html__( 'By Author', 'medianest-pro' ); ?></span>
                 <span class="dashicons dashicons-arrow-right-alt2"></span>
                 <ul class="wpmn_sort_menu_nested">
                     <li class="wpmn_sort_files_option" data-sort-by="author" data-sort-order="asc">
                         <span class="dashicons dashicons-yes wpmn_check_icon"></span>
-                        <?php echo esc_html__( 'Ascending', 'medianest' ); ?>
+                        <?php echo esc_html__( 'Ascending', 'medianest-pro' ); ?>
                     </li>
                     <li class="wpmn_sort_files_option" data-sort-by="author" data-sort-order="desc">
                         <span class="dashicons dashicons-yes wpmn_check_icon"></span>
-                        <?php echo esc_html__( 'Descending', 'medianest' ); ?>
+                        <?php echo esc_html__( 'Descending', 'medianest-pro' ); ?>
                     </li>
                 </ul>
             </li>
             <li class="wpmn_sort_menu_subitem has-nested">
-                <span><?php echo esc_html__( 'By Size', 'medianest' ); ?></span>
+                <span><?php echo esc_html__( 'By Size', 'medianest-pro' ); ?></span>
                 <span class="dashicons dashicons-arrow-right-alt2"></span>
                 <ul class="wpmn_sort_menu_nested">
                     <li class="wpmn_sort_files_option" data-sort-by="size" data-sort-order="asc">
                         <span class="dashicons dashicons-yes wpmn_check_icon"></span>
-                        <?php echo esc_html__( 'Ascending', 'medianest' ); ?>
+                        <?php echo esc_html__( 'Ascending', 'medianest-pro' ); ?>
                     </li>
                     <li class="wpmn_sort_files_option" data-sort-by="size" data-sort-order="desc">
                         <span class="dashicons dashicons-yes wpmn_check_icon"></span>
-                        <?php echo esc_html__( 'Descending', 'medianest' ); ?>
+                        <?php echo esc_html__( 'Descending', 'medianest-pro' ); ?>
                     </li>
                 </ul>
             </li>
@@ -106,7 +106,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
             <hr>
             <li class="wpmn_sort_files_option" data-sort-by="default" data-sort-order="desc">
                 <span class="dashicons dashicons-yes wpmn_check_icon"></span>
-                <span><?php echo esc_html__( 'Default', 'medianest' ); ?></span>
+                <span><?php echo esc_html__( 'Default', 'medianest-pro' ); ?></span>
             </li>
         </ul>
     </li>
@@ -125,8 +125,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
         <label for="wpmn_default_sort"><?php echo esc_html__( 'Sort files automatically by', 'medianest-pro' ); ?></label>
         <select id="wpmn_default_sort" class="wpmn_settings_select">
             <option value="default"><?php echo esc_html__( 'Default', 'medianest-pro' ); ?></option>
-            <option value="title-asc"><?php echo esc_html__( 'Name Ascending', 'medianest-pro' ); ?></option>
-            <option value="title-desc"><?php echo esc_html__( 'Name Descending', 'medianest-pro' ); ?></option>
+            <option value="title-asc"><?php echo esc_html__( 'Title Ascending', 'medianest-pro' ); ?></option>
+            <option value="title-desc"><?php echo esc_html__( 'Title Descending', 'medianest-pro' ); ?></option>
             <option value="date-asc"><?php echo esc_html__( 'Date Ascending', 'medianest-pro' ); ?></option>
             <option value="date-desc"><?php echo esc_html__( 'Date Descending', 'medianest-pro' ); ?></option>
             <option value="modified-asc"><?php echo esc_html__( 'Modified Ascending', 'medianest-pro' ); ?></option>
@@ -200,12 +200,12 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 <?php elseif ( $type === 'collapsed_menu_item' ) : ?>
 
     <li class="wpmn_more_menu_item" data-action="collapse-all"
-        data-text-hide="<?php echo esc_attr__( 'Collapse all', 'medianest' ); ?>"
-        data-text-show="<?php echo esc_attr__( 'Expand all', 'medianest' ); ?>"
+        data-text-hide="<?php echo esc_attr__( 'Collapse all', 'medianest-pro' ); ?>"
+        data-text-show="<?php echo esc_attr__( 'Expand all', 'medianest-pro' ); ?>"
         data-icon-hide="dashicons-editor-contract"
         data-icon-show="dashicons-editor-expand">
         <span class="dashicons dashicons-editor-contract"></span>
-        <span><?php echo esc_html__( 'Collapse all', 'medianest' ); ?></span>
+        <span><?php echo esc_html__( 'Collapse all', 'medianest-pro' ); ?></span>
     </li>
 
 <?php endif; ?>

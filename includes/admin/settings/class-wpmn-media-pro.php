@@ -48,7 +48,14 @@ if ( ! class_exists( 'WPMN_Media_Pro' ) ) :
 
             $screen = get_current_screen();
             // Check if we are in the media library (attachment post type)
-            $is_attachment = ( $screen && $screen->post_type === 'attachment' );
+            $is_attachment = (
+                $screen &&
+                (
+                    $screen->post_type === 'attachment' ||
+                    in_array( $screen->base, [ 'post', 'post-new' ], true )
+                )
+            );
+
 
             ob_start();
 

@@ -305,7 +305,7 @@ button.wpmn_media_sidebar_action_delete {
 .wpmn_theme_dropbox .wpmn_media_sidebar_new_folder,
 .wpmn_theme_dropbox .wpmn_media_sidebar_new_folder:hover {
     background-color: #1203fe;
-    border-radius: 0;
+    border-radius: 0 !important;
 }
 
 /*--------------------------- Color Picker ---------------------------*/

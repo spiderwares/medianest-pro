@@ -25,6 +25,9 @@ jQuery(function ($) {
         bindEvents() {
             $(document.body).on('click', '.wpmn_sort_folder_option', this.handleSortFolders.bind(this));
             $(document.body).on('click', '.wpmn_sort_files_option', this.handleSortFiles.bind(this));
+            // Bind the native select box change
+            $(document.body).on('change', '#wpmn_default_sort', this.handleDefaultSortChange.bind(this));
+
             $(document.body).on('click', '.wpmn_count_mode_item', this.handleCountMode.bind(this));
             $(document.body).on('click', '.wpmn_theme_btn', this.handleThemeToggle.bind(this));
             $(document.body).on('change', 'input[name="wpmn_settings[theme_design]"]', this.handleThemeDesign.bind(this));
@@ -87,14 +90,16 @@ jQuery(function ($) {
             if (!folderId) return;
             const folder = window.wpmn_media_folder.folder.findFolderById(folderId, this.admin.state.folders);
             if (!folder) return;
-
             const action = folder.is_pinned ? 'unpin_folder' : 'pin_folder';
-
-            this.admin.apiCall(action, { folder_id: folderId }).then(data => {
+            this.admin.apiCall(action, {
+                folder_id: folderId,
+                post_type: this.admin.getPostType() // Fix: Pass post type
+            }).then(data => {
                 window.wpmn_media_folder.folder.refreshState(data);
                 this.admin.showToast(folder.is_pinned ? 'Unpinned from top' : 'Pinned to top');
             }).catch(alert);
         }
+
 
         toggleCollapseAll(e) {
             e.preventDefault();
@@ -165,7 +170,10 @@ jQuery(function ($) {
         }
 
         handleFolderDuplicate(folderId) {
-            this.admin.apiCall('duplicate_folder', { folder_id: folderId }).then(data => {
+            this.admin.apiCall('duplicate_folder', {
+                folder_id: folderId,
+                post_type: this.admin.getPostType()
+            }).then(data => {
                 if (window.wpmn_media_folder && window.wpmn_media_folder.folder) {
                     window.wpmn_media_folder.folder.refreshState(data);
                 }
@@ -183,6 +191,7 @@ jQuery(function ($) {
                 const [field, order] = sortValue.split('-');
                 if (!field || !order) return;
                 wpOrder = order.toUpperCase();
+                if (field === 'name') orderby = 'name';
                 if (field === 'title') orderby = 'title';
                 if (field === 'date') orderby = 'date';
                 if (field === 'modified') orderby = 'modified';
@@ -201,6 +210,10 @@ jQuery(function ($) {
                         library.fetch();
                     }
                 } catch (e) { }
+            } else {
+                const sortBy = sortValue.split('-')[0] || 'default';
+                const sortOrder = sortValue.split('-')[1] || 'desc';
+                this.applySortToFiles(sortBy, sortOrder);
             }
         }
 
@@ -214,22 +227,36 @@ jQuery(function ($) {
             const savedFileSortOrder = localStorage.getItem(this.getStorageKey('file_sort_order')) || 'desc';
             this.updateSelectedBySort('file', savedFileSortBy, savedFileSortOrder);
 
+            // Sync the Native Select Box #wpmn_default_sort
+            const defaultSortSelect = $('#wpmn_default_sort');
+            if (defaultSortSelect.length) {
+                let selectVal = 'default';
+                if (savedFileSortBy !== 'default') {
+                    selectVal = `${savedFileSortBy}-${savedFileSortOrder.toLowerCase()}`;
+                }
+                defaultSortSelect.val(selectVal);
+            }
+
             // Count Mode
             const savedCountMode = localStorage.getItem(this.getStorageKey('count_mode')) || 'folder_only';
-            const $countItem = $(`.wpmn_count_mode_item[data-mode="${savedCountMode}"]`);
-            if ($countItem.length) {
-                this.updateCountModeUI($countItem);
+            const countItem = $(`.wpmn_count_mode_item[data-mode="${savedCountMode}"]`);
+            if (countItem.length) {
+                this.updateCountModeUI(countItem);
             }
 
             // Theme
             const settings = JSON.parse(localStorage.getItem('wpmnSettings') || '{}');
             this.applyTheme(settings.theme || (window.wpmn_media_library_pro && window.wpmn_media_library_pro.theme) || 'default');
-
             this.restoreCollapse();
             this.applySortToFolders(folderSort);
 
             if (typeof wp !== 'undefined' && wp.media && wp.media.frame) {
                 this.applySortToFiles(savedFileSortBy, savedFileSortOrder);
+            } else {
+                const urlParams = new URLSearchParams(window.location.search);
+                if (!urlParams.get('orderby') && savedFileSortBy !== 'default') {
+                    this.applySortToFiles(savedFileSortBy, savedFileSortOrder);
+                }
             }
         }
 
@@ -256,6 +283,30 @@ jQuery(function ($) {
             this.updateSelected(__this);
             this.applySortToFiles(sortBy, sortOrder);
             __this.closest('.wpmn_sort_menu').prop('hidden', true);
+
+            // Sync the select box if present
+            const selectVal = sortBy === 'default' ? 'default' : `${sortBy}-${sortOrder}`;
+            $('#wpmn_default_sort').val(selectVal);
+        }
+
+        handleDefaultSortChange(e) {
+            const val = $(e.currentTarget).val();
+            let sortBy = 'default';
+            let sortOrder = 'desc';
+
+            if (val !== 'default') {
+                const parts = val.split('-');
+                if (parts.length === 2) {
+                    sortBy = parts[0];
+                    sortOrder = parts[1];
+                }
+            }
+
+            localStorage.setItem(this.getStorageKey('file_sort_by'), sortBy);
+            localStorage.setItem(this.getStorageKey('file_sort_order'), sortOrder);
+
+            this.applySortToFiles(sortBy, sortOrder);
+            this.updateSelectedBySort('file', sortBy, sortOrder);
         }
 
         handleCountMode(e) {
@@ -393,11 +444,10 @@ jQuery(function ($) {
 
         getOrderByField(sortBy) {
             switch (sortBy) {
-                case 'name': return 'title';
+                case 'title': return 'title';
                 case 'date': return 'date';
                 case 'modified': return 'modified';
                 case 'author': return 'author';
-                case 'size': return 'wpmn_filesize';
                 default: return 'date';
             }
         }

@@ -32,9 +32,9 @@ if ( ! class_exists( 'WPMN_Color_Picker' ) ) :
             $color     = isset( $_POST['color'] ) ? sanitize_hex_color( $_POST['color'] ) : '';
             $post_type = isset($_POST['post_type']) ? sanitize_text_field( wp_unslash( $_POST['post_type'] ) ) : 'attachment';
 
-            if ( ! $folder_id ) {
+            if ( ! $folder_id ) :
                 wp_send_json_error( [ 'message' => 'Invalid folder ID' ] );
-            }
+            endif;
 
             update_term_meta( $folder_id, 'wpmn_color', $color );
             clean_term_cache( $folder_id, 'wpmn_media_folder' );
