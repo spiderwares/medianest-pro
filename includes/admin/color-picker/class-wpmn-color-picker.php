@@ -28,8 +28,13 @@ if ( ! class_exists( 'WPMN_Color_Picker' ) ) :
         }
 
         public function handle_save_folder_color() {
+
+            if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'wpmn_media_nonce' ) ) :
+                wp_die( esc_html__( 'Security check failed.', 'medianest-pro' ) );
+            endif;
+            
             $folder_id = isset( $_POST['folder_id'] ) ? absint( $_POST['folder_id'] ) : 0;
-            $color     = isset( $_POST['color'] ) ? sanitize_hex_color( $_POST['color'] ) : '';
+            $color     = isset( $_POST['color'] ) ? sanitize_hex_color( wp_unslash( $_POST['color'] ) ) : '';
             $post_type = isset($_POST['post_type']) ? sanitize_text_field( wp_unslash( $_POST['post_type'] ) ) : 'attachment';
 
             if ( ! $folder_id ) :

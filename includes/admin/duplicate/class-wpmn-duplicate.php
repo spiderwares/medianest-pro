@@ -28,6 +28,7 @@ if ( ! class_exists( 'WPMN_Media_Duplicate' ) ) :
         }
 
         public function duplicate_folder_request() {
+            
             if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'wpmn_media_nonce' ) ) :
                 wp_die( esc_html__( 'Security check failed.', 'medianest-pro' ) );
             endif;

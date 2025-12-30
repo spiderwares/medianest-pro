@@ -109,7 +109,6 @@ if ( ! class_exists( 'WPMN_Settings_Pro' ) ) :
             return $post_type_options;
         }
 
-
         public function load_checkbox_field( $wpmn_html, $wpmn_field, $wpmn_field_Val, $wpmn_field_Key ) {
             
             wpmn_get_template_pro(

@@ -28,6 +28,11 @@ if ( ! class_exists( 'WPMN_Media_Download' ) ) :
         }
 
         public function handle_folder_download() {
+
+            if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'wpmn_media_nonce' ) ) :
+                wp_die( esc_html__( 'Security check failed.', 'medianest-pro' ) );
+            endif;
+            
             $folder_id = isset( $_POST['folder_id'] ) ? absint( $_POST['folder_id'] ) : 0;
             if ( ! $folder_id ) :
                 wp_die( esc_html__( 'Invalid folder ID.', 'medianest-pro' ) );
@@ -36,10 +41,6 @@ if ( ! class_exists( 'WPMN_Media_Download' ) ) :
             $term = get_term( $folder_id, 'wpmn_media_folder' );
             if ( ! $term || is_wp_error( $term ) ) :
                 wp_die( esc_html__( 'Folder not found.', 'medianest-pro' ) );
-            endif;
-
-            if ( ! class_exists( 'ZipArchive' ) ) :
-                wp_die( esc_html__( 'ZipArchive class not found on your server.', 'medianest-pro' ) );
             endif;
 
             $zip = new ZipArchive();
@@ -59,7 +60,9 @@ if ( ! class_exists( 'WPMN_Media_Download' ) ) :
                 header( 'Content-Length: ' . filesize( $zip_path ) );
                 header( 'Pragma: no-cache' );
                 header( 'Expires: 0' );
+                // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_readfile
                 readfile( $zip_path );
+                // phpcs:ignore WordPress.WP.AlternativeFunctions.unlink_unlink
                 unlink( $zip_path );
                 exit;
             endif;

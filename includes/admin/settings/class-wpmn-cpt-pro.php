@@ -70,7 +70,7 @@ if ( ! class_exists( 'WPMN_CPT_Pro' ) ) :
         }
 
         public function wpmn_save_post_folder( $post_id ) {
-            if ( ! isset( $_POST['wpmn_meta_box_nonce'] ) || ! wp_verify_nonce( $_POST['wpmn_meta_box_nonce'], 'wpmn_save_post_folder' ) ) :
+            if ( ! isset( $_POST['wpmn_meta_box_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wpmn_meta_box_nonce'] ) ), 'wpmn_save_post_folder' ) ) :
                 return;
             endif;
 

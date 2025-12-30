@@ -9,8 +9,8 @@ jQuery(function ($) {
         }
 
         init() {
-            if (window.wpmn_admin_media && window.wpmn_admin_media.admin) {
-                this.admin = window.wpmn_admin_media.admin;
+            if (window.wpmn_media_library && window.wpmn_media_library.admin) {
+                this.admin = window.wpmn_media_library.admin;
                 this.bindEvents();
                 this.registerHooks();
                 this.applyInitialActiveStates();
@@ -25,9 +25,7 @@ jQuery(function ($) {
         bindEvents() {
             $(document.body).on('click', '.wpmn_sort_folder_option', this.handleSortFolders.bind(this));
             $(document.body).on('click', '.wpmn_sort_files_option', this.handleSortFiles.bind(this));
-            // Bind the native select box change
             $(document.body).on('change', '#wpmn_default_sort', this.handleDefaultSortChange.bind(this));
-
             $(document.body).on('click', '.wpmn_count_mode_item', this.handleCountMode.bind(this));
             $(document.body).on('click', '.wpmn_theme_btn', this.handleThemeToggle.bind(this));
             $(document.body).on('change', 'input[name="wpmn_settings[theme_design]"]', this.handleThemeDesign.bind(this));
@@ -44,8 +42,8 @@ jQuery(function ($) {
                 wp.hooks.addAction('wpmnSortFolders', 'medianest-pro', this.applySortFrom.bind(this));
 
                 wp.hooks.addAction('wpmnFolderChanged', 'medianest-pro', (slug) => {
-                    const savedFileSortBy = localStorage.getItem(this.getStorageKey('file_sort_by')) || 'default';
-                    const savedFileSortOrder = localStorage.getItem(this.getStorageKey('file_sort_order')) || 'desc';
+                    const savedFileSortBy = localStorage.getItem(this.getStorageKey('file_sort_by')) || 'default',
+                        savedFileSortOrder = localStorage.getItem(this.getStorageKey('file_sort_order')) || 'desc';
                     this.applySortToFiles(savedFileSortBy, savedFileSortOrder);
                 });
 
@@ -69,18 +67,18 @@ jQuery(function ($) {
 
             const pinItem = menu.find('[data-action="pin-folder"]');
             if (pinItem.length) {
-                const isPinned = !!folder.is_pinned;
-                const text = isPinned ? pinItem.data('text-unpin') : pinItem.data('text-pin');
-                const icon = isPinned ? pinItem.data('icon-unpin') : pinItem.data('icon-pin');
+                const __this = !!folder.is_pinned,
+                    text = __this ? pinItem.data('text-unpin') : pinItem.data('text-pin'),
+                    icon = __this ? pinItem.data('icon-unpin') : pinItem.data('icon-pin');
 
                 pinItem.find('span').last().text(text);
                 pinItem.find('.dashicons').attr('class', 'dashicons ' + icon);
             }
 
             // Sync Color Picker
-            const btn = $(`.wpmn_folder_button[data-folder-id="${folderId}"]`);
-            const currentColor = btn.attr('data-color') || '';
-            const colorDropdown = menu.find('.wpmn_color_picker_dropdown');
+            const __this = $(`.wpmn_folder_button[data-folder-id="${folderId}"]`),
+                currentColor = __this.attr('data-color') || '',
+                colorDropdown = menu.find('.wpmn_color_picker_dropdown');
             if (colorDropdown.length) {
                 this.updateColorUI(colorDropdown, currentColor);
             }
@@ -93,7 +91,7 @@ jQuery(function ($) {
             const action = folder.is_pinned ? 'unpin_folder' : 'pin_folder';
             this.admin.apiCall(action, {
                 folder_id: folderId,
-                post_type: this.admin.getPostType() // Fix: Pass post type
+                post_type: this.admin.getPostType()
             }).then(data => {
                 window.wpmn_media_folder.folder.refreshState(data);
                 this.admin.showToast(folder.is_pinned ? 'Unpinned from top' : 'Pinned to top');
@@ -111,14 +109,14 @@ jQuery(function ($) {
 
             this.admin.allCollapsed = !this.admin.allCollapsed;
 
-            const text = this.admin.allCollapsed ? __this.data('text-show') : __this.data('text-hide');
-            const icon = this.admin.allCollapsed ? __this.data('icon-show') : __this.data('icon-hide');
+            const text = this.admin.allCollapsed ? __this.data('text-show') : __this.data('text-hide'),
+                icon = this.admin.allCollapsed ? __this.data('icon-show') : __this.data('icon-hide');
 
             __this.find('span').last().text(text);
             __this.find('.dashicons').attr('class', 'dashicons ' + icon);
 
-            const allFolders = $('#wpmn_media_sidebar .wpmn_folder_node');
-            const allIds = {};
+            const allFolders = $('#wpmn_media_sidebar .wpmn_folder_node'),
+                allIds = {};
 
             if (this.admin.allCollapsed) {
                 // Collapse All
@@ -128,8 +126,8 @@ jQuery(function ($) {
                 // Expand All
                 allFolders.attr('aria-expanded', 'true').children('ul').slideDown(300);
                 allFolders.each((i, el) => {
-                    const btn = $(el).find('.wpmn_folder_button').first();
-                    const id = btn.data('folder-id');
+                    const __this = $(el).find('.wpmn_folder_button').first(),
+                        id = __this.data('folder-id');
                     if (id) allIds[id] = true;
                 });
                 this.admin.setStorage('wpmnExpandedFolders', JSON.stringify(allIds));
@@ -140,8 +138,8 @@ jQuery(function ($) {
         }
 
         restoreCollapse() {
-            const savedState = localStorage.getItem(this.getStorageKey('is_all_collapsed'));
-            const collapsed = savedState === '1';
+            const savedState = localStorage.getItem(this.getStorageKey('is_all_collapsed')),
+                collapsed = savedState === '1';
 
             if (this.admin) {
                 this.admin.allCollapsed = collapsed;
@@ -149,8 +147,8 @@ jQuery(function ($) {
 
             const __this = $('.wpmn_more_menu_item[data-action="collapse-all"]');
             if (__this.length) {
-                const text = collapsed ? __this.data('text-show') : __this.data('text-hide');
-                const icon = collapsed ? __this.data('icon-show') : __this.data('icon-hide');
+                const text = collapsed ? __this.data('text-show') : __this.data('text-hide'),
+                    icon = collapsed ? __this.data('icon-show') : __this.data('icon-hide');
 
                 __this.find('span').last().text(text);
                 __this.find('.dashicons').attr('class', 'dashicons ' + icon);
@@ -200,8 +198,8 @@ jQuery(function ($) {
 
             if (typeof wp !== 'undefined' && wp.media && wp.media.frame) {
                 try {
-                    const frame = wp.media.frame;
-                    const library = frame.state().get('library');
+                    const frame = wp.media.frame,
+                        library = frame.state().get('library');
                     if (library) {
                         library.props.set({ orderby: orderby, order: wpOrder });
                         if (library.mirroring) {
@@ -211,8 +209,8 @@ jQuery(function ($) {
                     }
                 } catch (e) { }
             } else {
-                const sortBy = sortValue.split('-')[0] || 'default';
-                const sortOrder = sortValue.split('-')[1] || 'desc';
+                const sortBy = sortValue.split('-')[0] || 'default',
+                    sortOrder = sortValue.split('-')[1] || 'desc';
                 this.applySortToFiles(sortBy, sortOrder);
             }
         }
@@ -223,8 +221,8 @@ jQuery(function ($) {
             this.updateSelectedBySort('folder', folderSort);
 
             // Files
-            const savedFileSortBy = localStorage.getItem(this.getStorageKey('file_sort_by')) || 'default';
-            const savedFileSortOrder = localStorage.getItem(this.getStorageKey('file_sort_order')) || 'desc';
+            const savedFileSortBy = localStorage.getItem(this.getStorageKey('file_sort_by')) || 'default',
+                savedFileSortOrder = localStorage.getItem(this.getStorageKey('file_sort_order')) || 'desc';
             this.updateSelectedBySort('file', savedFileSortBy, savedFileSortOrder);
 
             // Sync the Native Select Box #wpmn_default_sort
@@ -238,8 +236,8 @@ jQuery(function ($) {
             }
 
             // Count Mode
-            const savedCountMode = localStorage.getItem(this.getStorageKey('count_mode')) || 'folder_only';
-            const countItem = $(`.wpmn_count_mode_item[data-mode="${savedCountMode}"]`);
+            const savedCountMode = localStorage.getItem(this.getStorageKey('count_mode')) || 'folder_only',
+                countItem = $(`.wpmn_count_mode_item[data-mode="${savedCountMode}"]`);
             if (countItem.length) {
                 this.updateCountModeUI(countItem);
             }
@@ -262,8 +260,8 @@ jQuery(function ($) {
 
         handleSortFolders(e) {
             e.preventDefault();
-            const __this = $(e.currentTarget);
-            const sortType = __this.data('sort');
+            const __this = $(e.currentTarget),
+                sortType = __this.data('sort');
 
             localStorage.setItem(this.getStorageKey('folder_sort'), sortType);
             this.updateSelected(__this);
@@ -273,9 +271,9 @@ jQuery(function ($) {
 
         handleSortFiles(e) {
             e.preventDefault();
-            const __this = $(e.currentTarget);
-            const sortBy = __this.data('sort-by');
-            const sortOrder = __this.data('sort-order');
+            const __this = $(e.currentTarget),
+                sortBy = __this.data('sort-by'),
+                sortOrder = __this.data('sort-order');
 
             localStorage.setItem(this.getStorageKey('file_sort_by'), sortBy);
             localStorage.setItem(this.getStorageKey('file_sort_order'), sortOrder);
@@ -305,14 +303,13 @@ jQuery(function ($) {
             localStorage.setItem(this.getStorageKey('file_sort_by'), sortBy);
             localStorage.setItem(this.getStorageKey('file_sort_order'), sortOrder);
 
-            this.applySortToFiles(sortBy, sortOrder);
             this.updateSelectedBySort('file', sortBy, sortOrder);
         }
 
         handleCountMode(e) {
             e.preventDefault();
-            const __this = $(e.currentTarget);
-            const mode = __this.data('mode') || 'folder_only';
+            const __this = $(e.currentTarget),
+                mode = __this.data('mode') || 'folder_only';
 
             localStorage.setItem(this.getStorageKey('count_mode'), mode);
             this.updateCountModeUI(__this);
@@ -334,8 +331,8 @@ jQuery(function ($) {
 
         handleThemeToggle(e) {
             e.preventDefault();
-            const __this = $(e.currentTarget);
-            const theme = __this.data('theme') || 'default';
+            const __this = $(e.currentTarget),
+                theme = __this.data('theme') || 'default';
 
             $('.wpmn_theme_btn').removeClass('wpmn_theme_btn--active');
             __this.addClass('wpmn_theme_btn--active');
@@ -351,8 +348,8 @@ jQuery(function ($) {
         }
 
         handleThemeDesign(e) {
-            const val = $(e.currentTarget).val();
-            const theme = val.split(' ')[0].toLowerCase();
+            const val = $(e.currentTarget).val(),
+                theme = val.split(' ')[0].toLowerCase();
 
             const settings = JSON.parse(localStorage.getItem('wpmnSettings') || '{}');
             settings.theme = theme;
@@ -406,20 +403,20 @@ jQuery(function ($) {
         }
 
         applySortToFiles(sortBy, sortOrder) {
-            const isGridView = typeof wp !== 'undefined' && wp.media && wp.media.frame;
-            const isUploadList = window.location.pathname.includes('upload.php') && !window.location.search.includes('mode=grid');
-            const isEditList = window.location.pathname.includes('edit.php');
+            const gridView = typeof wp !== 'undefined' && wp.media && wp.media.frame,
+                uploadList = window.location.pathname.includes('upload.php') && !window.location.search.includes('mode=grid'),
+                editList = window.location.pathname.includes('edit.php');
 
-            if (isGridView) {
+            if (gridView) {
                 try {
-                    const frame = wp.media.frame;
-                    const state = typeof frame.state === 'function' ? frame.state() : frame.state;
+                    const frame = wp.media.frame,
+                        state = typeof frame.state === 'function' ? frame.state() : frame.state;
 
                     if (state) {
                         const library = state.get('library');
                         if (library) {
-                            const orderbyField = sortBy === 'default' ? 'date' : this.getOrderByField(sortBy);
-                            const orderDir = sortBy === 'default' ? 'DESC' : sortOrder.toUpperCase();
+                            const orderbyField = sortBy === 'default' ? 'date' : this.getOrderByField(sortBy),
+                                orderDir = sortBy === 'default' ? 'DESC' : sortOrder.toUpperCase();
 
                             library.props.set({ orderby: orderbyField, order: orderDir });
                             if (library.mirroring) {
@@ -429,10 +426,10 @@ jQuery(function ($) {
                         }
                     }
                 } catch (err) { }
-            } else if (isUploadList || isEditList) {
-                const url = new URL(window.location.href);
-                const orderbyField = this.getOrderByField(sortBy);
-                const orderDir = sortOrder.toUpperCase();
+            } else if (uploadList || editList) {
+                const url = new URL(window.location.href),
+                    orderbyField = this.getOrderByField(sortBy),
+                    orderDir = sortOrder.toUpperCase();
 
                 if (url.searchParams.get('orderby') !== orderbyField || url.searchParams.get('order') !== orderDir) {
                     url.searchParams.set('orderby', orderbyField);
@@ -459,8 +456,8 @@ jQuery(function ($) {
                 this.applySortToFolders(folderSort);
             }
 
-            const savedFileSortBy = localStorage.getItem(this.getStorageKey('file_sort_by')) || 'default';
-            const savedFileSortOrder = localStorage.getItem(this.getStorageKey('file_sort_order')) || 'desc';
+            const savedFileSortBy = localStorage.getItem(this.getStorageKey('file_sort_by')) || 'default',
+                savedFileSortOrder = localStorage.getItem(this.getStorageKey('file_sort_order')) || 'desc';
             this.updateSelectedBySort('file', savedFileSortBy, savedFileSortOrder);
 
             if (typeof wp !== 'undefined' && wp.media && wp.media.frame) {
@@ -499,9 +496,9 @@ jQuery(function ($) {
                 if (a.is_pinned !== b.is_pinned) {
                     return b.is_pinned ? 1 : -1;
                 }
-                const nameA = a.name.toLowerCase();
-                const nameB = b.name.toLowerCase();
-                const comparison = nameA.localeCompare(nameB);
+                const nameA = a.name.toLowerCase(),
+                    nameB = b.name.toLowerCase(),
+                    comparison = nameA.localeCompare(nameB);
                 return order === 'asc' ? comparison : -comparison;
             });
             return sorted.map(folder => ({
@@ -527,28 +524,31 @@ jQuery(function ($) {
             this.saveColor(__this, '');
         }
 
-        handlePreviewClick(e) { e.preventDefault(); e.stopPropagation(); }
+        handlePreviewClick(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
 
         syncColorPicker(e) {
-            const __this = $(e.currentTarget).find('.wpmn_color_picker_dropdown');
-            const menu = $('.wpmn_folder_context_menu');
-            const folderId = menu.attr('data-folder-id');
-            const btn = $(`.wpmn_folder_button[data-folder-id="${folderId}"]`);
-            const currentColor = btn.attr('data-color') || '';
+            const __this = $(e.currentTarget).find('.wpmn_color_picker_dropdown'),
+                menu = $('.wpmn_folder_context_menu'),
+                folderId = menu.attr('data-folder-id'),
+                btn = $(`.wpmn_folder_button[data-folder-id="${folderId}"]`),
+                currentColor = btn.attr('data-color') || '';
             this.updateColorUI(__this, currentColor);
         }
 
         updateColorUI(__this, color) {
-            const preview = __this.find('.wpmn_current_color_preview');
-            const themeColor = this.getThemeColor();
+            const preview = __this.find('.wpmn_current_color_preview'),
+                themeColor = this.getThemeColor();
             preview.css('background-color', color || themeColor);
             if (!color) preview.find('.dashicons').hide();
             else preview.find('.dashicons').show();
         }
 
         getThemeColor() {
-            const settings = JSON.parse(localStorage.getItem('wpmnSettings') || '{}');
-            const theme = settings.theme || (window.wpmn_media_library_pro && window.wpmn_media_library_pro.theme) || 'default';
+            const settings = JSON.parse(localStorage.getItem('wpmnSettings') || '{}'),
+                theme = settings.theme || (window.wpmn_media_library_pro && window.wpmn_media_library_pro.theme) || 'default';
             switch (theme) {
                 case 'dropbox': return '#0061ff';
                 case 'windows': return '#fcd133';
@@ -557,13 +557,13 @@ jQuery(function ($) {
         }
 
         saveColor(__this, color) {
-            const menu = __this.closest('.wpmn_folder_context_menu');
-            const folderId = menu.attr('data-folder-id');
+            const menu = __this.closest('.wpmn_folder_context_menu'),
+                folderId = menu.attr('data-folder-id');
             if (!this.admin) return;
             this.admin.apiCall('save_folder_color', { folder_id: folderId, color: color }).then(data => {
                 if (window.wpmn_media_folder && window.wpmn_media_folder.folder) {
-                    const folderObj = window.wpmn_media_folder.folder;
-                    const btn = $(`.wpmn_folder_button[data-folder-id="${folderId}"]`);
+                    const folderObj = window.wpmn_media_folder.folder,
+                        btn = $(`.wpmn_folder_button[data-folder-id="${folderId}"]`);
                     btn.attr('data-color', color);
                     const $icon = btn.find('.wpmn_folder_icon');
                     if ($icon.length) folderObj.applyIconColor($icon, color);

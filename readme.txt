@@ -1,7 +1,7 @@
 === Medianest Pro ===
 Contributors: cosmicinfosoftware
 Requires at least: 5.2
-Tested up to: 6.8
+Tested up to: 6.9
 Requires PHP: 7.4
 Stable tag: 1.0.0
 Version: 1.0.0
@@ -9,7 +9,7 @@ License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Tags: media folders, file manager, wordpress media, library organization, woocommerce media
 
-Sort and organize media files with simple, powerful folder tools. Extend the capabilities of your WordPress media library with professional organizational features.
+Organize and sort WordPress media with folders, themes, and advanced tools for a professional media library.
 
 == Description ==
 
