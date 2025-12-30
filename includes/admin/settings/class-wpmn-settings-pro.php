@@ -6,13 +6,16 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 if ( ! class_exists( 'WPMN_Settings_Pro' ) ) :
 
     /**
-	 * Class WPMN_Settings_Pro
-     * 
-	 */
+     * Main WPMN_Settings_Pro Class
+     *
+     * @class WPMN_Settings_Pro
+     * @version 1.0.0
+     */
     class WPMN_Settings_Pro {
 
         /**
          * Constructor for the class.
+         * 
          */
         public function __construct() {
             $this->events_handler();
@@ -20,6 +23,7 @@ if ( ! class_exists( 'WPMN_Settings_Pro' ) ) :
 
         /**
          * Initialize hooks and filters.
+         * 
          */
         public function events_handler() {
             add_action( 'wpmn_settings_tabs', [ $this, 'add_pro_tabs' ] );
@@ -29,10 +33,18 @@ if ( ! class_exists( 'WPMN_Settings_Pro' ) ) :
             add_filter( 'wpmn_checkbox_field', [ $this, 'load_checkbox_field' ], 10, 4 );
         }
 
+        /**
+         * Add Pro tabs.
+         * 
+         */
         public function add_pro_tabs( $active_tab ) {
             include WPMN_PRO_PATH . 'includes/admin/settings/views/file-menu-pro.php';
         }
 
+        /**
+         * Settings fields pro.
+         * 
+         */
         public function settings_fields_pro( $fields ) {
 
             unset($fields['theme_design']['disabled_options']);
@@ -57,6 +69,10 @@ if ( ! class_exists( 'WPMN_Settings_Pro' ) ) :
             return $fields;
         }
 
+        /**
+         * Post type field pro.
+         * 
+         */
         public function post_type_field_pro( $fields ) {
             // Ensure fields is an array
             $fields = is_array( $fields ) ? $fields : [];

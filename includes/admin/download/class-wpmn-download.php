@@ -43,7 +43,7 @@ if ( ! class_exists( 'WPMN_Media_Download' ) ) :
                 wp_die( esc_html__( 'Folder not found.', 'medianest-pro' ) );
             endif;
 
-            $zip = new ZipArchive();
+            $zip      = new ZipArchive();
             $zip_name = sanitize_title( $term->name ) . '-' . time() . '.zip';
             $zip_path = get_temp_dir() . $zip_name;
 

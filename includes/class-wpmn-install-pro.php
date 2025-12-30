@@ -12,8 +12,6 @@ if ( ! class_exists( 'WPMN_Install_Pro' ) ) :
     /**
      * WPMN_Install_Pro Class
      *
-     * Handles installation processes like creating database tables,
-     * setting up roles, and creating necessary pages on plugin activation.
      */
     class WPMN_Install_Pro {
 

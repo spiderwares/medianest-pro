@@ -14,6 +14,7 @@ if ( ! class_exists( 'WPMN_Media_Pro' ) ) :
         
         /**
          * Constructor for the class.
+         * 
          */
         public function __construct() {
             $this->events_handler();
@@ -21,6 +22,7 @@ if ( ! class_exists( 'WPMN_Media_Pro' ) ) :
         
         /**
          * Initialize hooks and filters.
+         * 
          */
         public function events_handler() {
             add_filter( 'wpmn_sort_menu_item', [ $this, 'sort_menu_items' ], 10, 2 );
@@ -31,6 +33,10 @@ if ( ! class_exists( 'WPMN_Media_Pro' ) ) :
             add_filter( 'wpmn_collapsed_menu_item', [ $this, 'sort_menu_items' ], 10, 2 );
         }
 
+        /**
+         * Sort menu items.
+         * 
+         */
         public function sort_menu_items( $output, $args ) {
 
             $map = array(
@@ -70,7 +76,6 @@ if ( ! class_exists( 'WPMN_Media_Pro' ) ) :
             return $output . ob_get_clean();
         }
 
-        
     }
 
     new WPMN_Media_Pro();

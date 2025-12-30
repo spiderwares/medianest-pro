@@ -28,7 +28,7 @@ if ( ! class_exists( 'WPMN_Media_Duplicate' ) ) :
         }
 
         public function duplicate_folder_request() {
-            
+
             if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'wpmn_media_nonce' ) ) :
                 wp_die( esc_html__( 'Security check failed.', 'medianest-pro' ) );
             endif;
@@ -40,7 +40,7 @@ if ( ! class_exists( 'WPMN_Media_Duplicate' ) ) :
 
             // Get post type from the request
             $post_type = isset($_POST['post_type']) ? sanitize_text_field( wp_unslash( $_POST['post_type'] ) ) : 'attachment';
-            $result = $this->duplicate_folder($folder_id, null, $post_type);
+            $result    = $this->duplicate_folder($folder_id, null, $post_type);
             
             if (is_wp_error($result)) :
                 wp_send_json_error(['message' => $result->get_error_message()]);

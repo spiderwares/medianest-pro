@@ -5,10 +5,34 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 if ( ! class_exists( 'WPMN_CPT_Pro' ) ) :
 
+    /**
+     * Main WPMN_CPT_Pro Class
+     *
+     * @class WPMN_CPT_Pro
+     * @version 1.0.0
+     */
     class WPMN_CPT_Pro {
 
+        /**
+         * Settings.
+		 * 
+         */
+        public $settings;
+
+        /**
+         * Constructor for the class.
+		 * 
+         */
         public function __construct() {
-            // Hook into Core initialization
+            $this->events_handler();
+        }
+        
+        /**
+         * Initialize hooks and filters.
+        * 
+         */
+        public function events_handler() {
+            $settings   = get_option( 'wpmn_settings', [] );
             add_action( 'wpmn_media_library_init', array( $this, 'init_hooks' ) );
         }
 
@@ -18,8 +42,7 @@ if ( ! class_exists( 'WPMN_CPT_Pro' ) ) :
         }
 
         public function wpmn_add_meta_boxes() {
-            $settings = get_option( 'wpmn_settings', [] );
-            $post_types = isset( $settings['post_types'] ) ? (array) $settings['post_types'] : [];
+            $post_types = isset( $this->settings['post_types'] ) ? (array) $this->settings['post_types'] : [];
 
             foreach ( $post_types as $post_type ) :
                 add_meta_box(
@@ -37,9 +60,9 @@ if ( ! class_exists( 'WPMN_CPT_Pro' ) ) :
             if ( ! class_exists( 'WPMN_Helper' ) ) return;
 
             wp_nonce_field( 'wpmn_save_post_folder', 'wpmn_meta_box_nonce' );
-            $terms = wp_get_object_terms( $post->ID, 'wpmn_media_folder' );
-            $selected = $terms[0]->term_id ?? 0;
-            $labels = WPMN_Helper::wpmn_get_folder_labels();
+            $terms      = wp_get_object_terms( $post->ID, 'wpmn_media_folder' );
+            $selected   = $terms[0]->term_id ?? 0;
+            $labels     = WPMN_Helper::wpmn_get_folder_labels();
 
             // Get only terms for this post type
             $include_terms = get_terms( array(

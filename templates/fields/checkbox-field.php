@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
             endif;
 
             foreach ( $field['options'] as $wpmn_option_key => $wpmn_option_label ) :
-                $wpmn_input_name = ! empty( $field['name'] ) ? $field['name'] . '[]' : 'wpmn_settings[' . esc_attr( $field_Key ) . '][]';
+                $wpmn_input_name  = ! empty( $field['name'] ) ? $field['name'] . '[]' : 'wpmn_settings[' . esc_attr( $field_Key ) . '][]';
                 $wpmn_checkbox_id = esc_attr( $field_Key . '_' . $wpmn_option_key );
                 $wpmn_is_checked  = in_array( $wpmn_option_key, $wpmn_current_values, true );
             ?>
