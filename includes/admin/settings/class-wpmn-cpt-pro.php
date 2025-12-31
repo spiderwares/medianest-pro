@@ -29,7 +29,7 @@ if ( ! class_exists( 'WPMN_CPT_Pro' ) ) :
         
         /**
          * Initialize hooks and filters.
-        * 
+         * 
          */
         public function events_handler() {
             $settings   = get_option( 'wpmn_settings', [] );

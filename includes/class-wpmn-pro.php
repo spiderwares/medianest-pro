@@ -18,7 +18,8 @@ final class WPMN_PRO {
     protected static $instance = null;
 
     /**
-     * Constructor
+     * Constructor for the class.
+     * 
      */
     public function __construct() {
         $this->event_handler();
@@ -26,7 +27,8 @@ final class WPMN_PRO {
     }
 
     /**
-     * Hook initialization
+     * Initialize hooks and filters.
+     * 
      */
     private function event_handler() {
         // Register plugin activation hook
@@ -50,6 +52,7 @@ final class WPMN_PRO {
 
     /**
      * Function to display admin notice if Swiper Slider is not active.
+     * 
      */
     public function wpmn_admin_notice() {
         ?>
@@ -61,6 +64,7 @@ final class WPMN_PRO {
 
     /**
      * Function to initialize the plugin after checking free version.
+     * 
      */
     public function wpmn_install() {
         if ( ! class_exists( 'WPMN_Settings_Fields' ) ) :
@@ -72,6 +76,7 @@ final class WPMN_PRO {
 
     /**
      * Include required files.
+     * 
      */
     public function includes() {
         if ( is_admin() ) :
@@ -81,25 +86,30 @@ final class WPMN_PRO {
         endif;
 
         require_once WPMN_PRO_PATH . 'includes/wpmn-core-functions-pro.php';
+
+        // WPBakery Support
+        require_once WPMN_PRO_PATH . 'includes/admin/settings/PageBuilders/WPBakery/class-wpmn-wpbakery.php';
     }
 
     /**
      * Include admin files.
+     * 
      */
     public function includes_admin() {
         require_once WPMN_PRO_PATH . 'includes/class-wpmn-install-pro.php';
         require_once WPMN_PRO_PATH . 'includes/admin/settings/class-wpmn-settings-pro.php';
         require_once WPMN_PRO_PATH . 'includes/admin/settings/class-admin-menu-pro.php';
         require_once WPMN_PRO_PATH . 'includes/admin/settings/class-wpmn-media-pro.php';
-        require_once WPMN_PRO_PATH . 'includes/admin/download/class-wpmn-download.php';
-        require_once WPMN_PRO_PATH . 'includes/admin/duplicate/class-wpmn-duplicate.php';
-        require_once WPMN_PRO_PATH . 'includes/admin/color-picker/class-wpmn-color-picker.php';
-        require_once WPMN_PRO_PATH . 'includes/admin/pin-top/class-wpmn-pin-top.php';
+        require_once WPMN_PRO_PATH . 'includes/admin/settings/Download/class-wpmn-download.php';
+        require_once WPMN_PRO_PATH . 'includes/admin/settings/Duplicate/class-wpmn-duplicate.php';
+        require_once WPMN_PRO_PATH . 'includes/admin/settings/Color-Picker/class-wpmn-color-picker.php';
+        require_once WPMN_PRO_PATH . 'includes/admin/settings/Pin-Top/class-wpmn-pin-top.php';
         require_once WPMN_PRO_PATH . 'includes/admin/settings/class-wpmn-cpt-pro.php';
     }
 
     /**
      * Include public files.
+     * 
      */
     public function includes_public() {
     }
