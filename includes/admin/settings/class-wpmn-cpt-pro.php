@@ -37,11 +37,11 @@ if ( ! class_exists( 'WPMN_CPT_Pro' ) ) :
         }
 
         public function init_hooks() {
-            add_action( 'add_meta_boxes', array( $this, 'wpmn_add_meta_boxes' ) );
-            add_action( 'save_post', array( $this, 'wpmn_save_post_folder' ) );
+            add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
+            add_action( 'save_post', array( $this, 'save_post_folder' ) );
         }
 
-        public function wpmn_add_meta_boxes() {
+        public function add_meta_boxes() {
             $post_types = isset( $this->settings['post_types'] ) ? (array) $this->settings['post_types'] : [];
 
             foreach ( $post_types as $post_type ) :
@@ -61,8 +61,8 @@ if ( ! class_exists( 'WPMN_CPT_Pro' ) ) :
 
             wp_nonce_field( 'wpmn_save_post_folder', 'wpmn_meta_box_nonce' );
             $terms      = wp_get_object_terms( $post->ID, 'wpmn_media_folder' );
-            $selected   = $terms[0]->term_id ?? 0;
-            $labels     = WPMN_Helper::wpmn_get_folder_labels();
+            $selected   = ( isset( $terms[0] ) && isset( $terms[0]->term_id ) ) ? $terms[0]->term_id : 0;
+            $labels     = WPMN_Helper::get_folder_labels();
 
             // Get only terms for this post type
             $include_terms = get_terms( array(
@@ -92,7 +92,7 @@ if ( ! class_exists( 'WPMN_CPT_Pro' ) ) :
             ) );
         }
 
-        public function wpmn_save_post_folder( $post_id ) {
+        public function save_post_folder( $post_id ) {
             if ( ! isset( $_POST['wpmn_meta_box_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wpmn_meta_box_nonce'] ) ), 'wpmn_save_post_folder' ) ) :
                 return;
             endif;

@@ -126,15 +126,42 @@ if ( ! class_exists( 'WPMN_Settings_Pro' ) ) :
         }
 
         public function load_checkbox_field( $wpmn_html, $wpmn_field, $wpmn_field_Val, $wpmn_field_Key ) {
-            
-            wpmn_get_template_pro(
-                'fields/checkbox-field.php', 
-                array(
-                    'field'     => $wpmn_field,
-                    'field_Val' => $wpmn_field_Val,
-                    'field_Key' => $wpmn_field_Key,
-                ),
-            );
+            ?>
+            <td>
+                <div class="wpmn_checkbox_field">
+                    <?php if ( isset( $wpmn_field['options'] ) && is_array( $wpmn_field['options'] ) ) :
+                        $wpmn_current_values = isset( $wpmn_field_Val ) ? $wpmn_field_Val : ( isset( $wpmn_field['default'] ) ? $wpmn_field['default'] : array() );
+
+                        if ( ! is_array( $wpmn_current_values ) ) :
+                            $wpmn_current_values = array();
+                        endif;
+
+                        foreach ( $wpmn_field['options'] as $wpmn_option_key => $wpmn_option_label ) :
+                            $wpmn_input_name  = ! empty( $wpmn_field['name'] ) ? $wpmn_field['name'] . '[]' : 'wpmn_settings[' . esc_attr( $wpmn_field_Key ) . '][]';
+                            $wpmn_checkbox_id = esc_attr( $wpmn_field_Key . '_' . $wpmn_option_key );
+                            $wpmn_is_checked  = in_array( $wpmn_option_key, $wpmn_current_values, true );
+                        ?>
+
+                            <div class="wpmn_checkbox_item">
+                                <input
+                                    type="checkbox"
+                                    id="<?php echo esc_attr( $wpmn_checkbox_id ); ?>"
+                                    name="<?php echo esc_attr( $wpmn_input_name ); ?>"
+                                    value="<?php echo esc_attr( $wpmn_option_key ); ?>"
+                                    <?php checked( $wpmn_is_checked ); ?>
+                                />
+
+                                <label for="<?php echo esc_attr( $wpmn_checkbox_id ); ?>">
+                                    <?php echo esc_html( $wpmn_option_label ); ?>
+                                </label>
+                            </div>
+                        <?php endforeach;
+                    endif; ?>
+                </div>
+
+                <p><?php echo isset( $wpmn_field['desc'] ) ? wp_kses_post( $wpmn_field['desc'] ) : ''; ?></p>
+            </td>
+            <?php
         }
     }
 

@@ -34,22 +34,23 @@ if ( ! class_exists( 'WPMN_Pin_Top' ) ) :
         }
 
         public function handle_pin_folder( $data ) {
-            $folder_id = absint( $data['folder_id'] ?? 0 );
+            $folder_id = absint( isset( $data['folder_id'] ) ? $data['folder_id'] : 0 );
             if ( ! $folder_id ) wp_send_json_error( array( 'message' => 'Invalid folder ID' ) );
 
             update_term_meta( $folder_id, 'wpmn_is_pinned', '1' );
             
-            $post_type = sanitize_text_field( $data['post_type'] ?? 'attachment' );
+            $post_type = sanitize_text_field( isset( $data['post_type'] ) ? $data['post_type'] : 'attachment' );
+
             wp_send_json_success( WPMN_Media_Folders::payload( null, $post_type ) );
         }
 
         public function handle_unpin_folder( $data ) {
-            $folder_id = absint( $data['folder_id'] ?? 0 );
+            $folder_id = absint( isset( $data['folder_id'] ) ? $data['folder_id'] : 0 );
             if ( ! $folder_id ) wp_send_json_error( array( 'message' => 'Invalid folder ID' ) );
 
             delete_term_meta( $folder_id, 'wpmn_is_pinned' );
             
-            $post_type = sanitize_text_field( $data['post_type'] ?? 'attachment' );
+            $post_type = sanitize_text_field( isset( $data['post_type'] ) ? $data['post_type'] : 'attachment' );
             wp_send_json_success( WPMN_Media_Folders::payload( null, $post_type ) );
         }
 
