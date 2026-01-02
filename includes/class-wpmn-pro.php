@@ -86,9 +86,8 @@ final class WPMN_PRO {
         endif;
 
         require_once WPMN_PRO_PATH . 'includes/wpmn-core-functions-pro.php';
-
-        // WPBakery Support
         require_once WPMN_PRO_PATH . 'includes/admin/settings/PageBuilders/WPBakery/class-wpmn-wpbakery.php';
+        require_once WPMN_PRO_PATH . 'includes/admin/settings/PageBuilders/Divi/class-wpmn-init.php';
     }
 
     /**

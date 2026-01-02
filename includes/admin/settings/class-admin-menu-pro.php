@@ -29,6 +29,7 @@ if ( ! class_exists( 'WPMN_Admin_Menu_Pro' ) ) :
             // menu
             $this->settings = get_option( 'wpmn_settings', [] );
             add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_styles' ], 15 );
+            add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'enqueue_admin_styles' ] );
         }
 
         public function enqueue_admin_styles() {
