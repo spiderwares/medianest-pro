@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       Media Directory Pro
- * Description:       Sort and organize media files with simple, powerful folder tools.
+ * Description:       Unlock advanced folder management with powerful tools to sort, organize, and control media more efficiently.
  * Version:           1.0.0
  * Requires at least: 5.2
  * Requires PHP:      7.4
