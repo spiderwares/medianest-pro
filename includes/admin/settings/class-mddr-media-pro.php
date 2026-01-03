@@ -3,14 +3,14 @@
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-if ( ! class_exists( 'WPMN_Media_Pro' ) ) :
+if ( ! class_exists( 'MDDR_Media_Pro' ) ) :
 
     /**
-     * Main WPMN_Media_Pro Class
+     * Main MDDR_Media_Pro Class
      *
-     * @class WPMN_Media_Pro
+     * @class MDDR_Media_Pro
      */
-    class WPMN_Media_Pro {
+    class MDDR_Media_Pro {
         
         /**
          * Constructor for the class.
@@ -25,12 +25,12 @@ if ( ! class_exists( 'WPMN_Media_Pro' ) ) :
          * 
          */
         public function events_handler() {
-            add_filter( 'wpmn_sort_menu_item', [ $this, 'sort_menu_items' ], 10, 2 );
-            add_filter( 'wpmn_sort_sub_menu_item', [ $this, 'sort_menu_items' ], 10, 2 );
-            add_filter( 'wpmn_theme_buttons', [ $this, 'sort_menu_items' ], 10, 2 );
-            add_filter( 'wpmn_folder_context_menu', [ $this, 'sort_menu_items' ], 10, 2 );
-            add_filter( 'wpmn_default_folder', [ $this, 'sort_menu_items' ], 10, 2 );
-            add_filter( 'wpmn_collapsed_menu_item', [ $this, 'sort_menu_items' ], 10, 2 );
+            add_filter( 'mddr_sort_menu_item', [ $this, 'sort_menu_items' ], 10, 2 );
+            add_filter( 'mddr_sort_sub_menu_item', [ $this, 'sort_menu_items' ], 10, 2 );
+            add_filter( 'mddr_theme_buttons', [ $this, 'sort_menu_items' ], 10, 2 );
+            add_filter( 'mddr_folder_context_menu', [ $this, 'sort_menu_items' ], 10, 2 );
+            add_filter( 'mddr_default_folder', [ $this, 'sort_menu_items' ], 10, 2 );
+            add_filter( 'mddr_collapsed_menu_item', [ $this, 'sort_menu_items' ], 10, 2 );
         }
 
         /**
@@ -40,12 +40,12 @@ if ( ! class_exists( 'WPMN_Media_Pro' ) ) :
         public function sort_menu_items( $output, $args ) {
 
             $map = array(
-                'wpmn_sort_menu_item'      => 'menu',
-                'wpmn_sort_sub_menu_item'  => 'submenu',
-                'wpmn_theme_buttons'       => 'theme_buttons',
-                'wpmn_folder_context_menu' => 'folder_context_menu',
-                'wpmn_default_folder'      => 'default_folder',
-                'wpmn_collapsed_menu_item' => 'collapsed_menu_item',
+                'mddr_sort_menu_item'      => 'menu',
+                'mddr_sort_sub_menu_item'  => 'submenu',
+                'mddr_theme_buttons'       => 'theme_buttons',
+                'mddr_folder_context_menu' => 'folder_context_menu',
+                'mddr_default_folder'      => 'default_folder',
+                'mddr_collapsed_menu_item' => 'collapsed_menu_item',
             );
 
             $current_filter = current_filter();
@@ -65,7 +65,7 @@ if ( ! class_exists( 'WPMN_Media_Pro' ) ) :
 
             ob_start();
 
-            wpmn_get_template_pro(
+            mddr_get_template_pro(
                 'media/library-folder-pro.php',
                 array(
                     'type'          => $map[ $current_filter ],
@@ -78,6 +78,6 @@ if ( ! class_exists( 'WPMN_Media_Pro' ) ) :
 
     }
 
-    new WPMN_Media_Pro();
+    new MDDR_Media_Pro();
 
 endif;

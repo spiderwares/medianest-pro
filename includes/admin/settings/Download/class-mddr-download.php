@@ -3,14 +3,14 @@
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-if ( ! class_exists( 'WPMN_Media_Download' ) ) :
+if ( ! class_exists( 'MDDR_Media_Download' ) ) :
 
     /**
-     * Main WPMN_Media_Download Class
+     * Main MDDR_Media_Download Class
      *
-     * @class WPMN_Media_Download
+     * @class MDDR_Media_Download
      */
-    class WPMN_Media_Download {
+    class MDDR_Media_Download {
         
         /**
          * Constructor for the class.
@@ -23,24 +23,24 @@ if ( ! class_exists( 'WPMN_Media_Download' ) ) :
          * Initialize hooks and filters.
          */
         public function events_handler() {
-            add_action( 'wpmn_ajax_download_folder_zip', [ $this, 'handle_folder_download' ] );
-            add_action( 'wpmn_ajax_nopriv_download_folder_zip', [ $this, 'handle_folder_download' ] );
+            add_action( 'mddr_ajax_download_folder_zip', [ $this, 'handle_folder_download' ] );
+            add_action( 'mddr_ajax_nopriv_download_folder_zip', [ $this, 'handle_folder_download' ] );
         }
 
         public function handle_folder_download() {
 
-            if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'wpmn_media_nonce' ) ) :
-                wp_die( esc_html__( 'Security check failed.', 'medianest-pro' ) );
+            if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'mddr_media_nonce' ) ) :
+                wp_die( esc_html__( 'Security check failed.', 'media-directory-pro' ) );
             endif;
             
             $folder_id = isset( $_POST['folder_id'] ) ? absint( $_POST['folder_id'] ) : 0;
             if ( ! $folder_id ) :
-                wp_die( esc_html__( 'Invalid folder ID.', 'medianest-pro' ) );
+                wp_die( esc_html__( 'Invalid folder ID.', 'media-directory-pro' ) );
             endif;
 
-            $term = get_term( $folder_id, 'wpmn_media_folder' );
+            $term = get_term( $folder_id, 'mddr_media_folder' );
             if ( ! $term || is_wp_error( $term ) ) :
-                wp_die( esc_html__( 'Folder not found.', 'medianest-pro' ) );
+                wp_die( esc_html__( 'Folder not found.', 'media-directory-pro' ) );
             endif;
 
             $zip      = new ZipArchive();
@@ -48,7 +48,7 @@ if ( ! class_exists( 'WPMN_Media_Download' ) ) :
             $zip_path = get_temp_dir() . $zip_name;
 
             if ( $zip->open( $zip_path, ZipArchive::CREATE ) !== true ) :
-                wp_die( esc_html__( 'Could not create ZIP file.', 'medianest-pro' ) );
+                wp_die( esc_html__( 'Could not create ZIP file.', 'media-directory-pro' ) );
             endif;
 
             $this->add_folder_to_zip( $zip, $folder_id );
@@ -69,7 +69,7 @@ if ( ! class_exists( 'WPMN_Media_Download' ) ) :
         }
 
         public function add_folder_to_zip( &$zip, $folder_id, $path = '' ) {
-            $attachment_ids = get_objects_in_term( $folder_id, 'wpmn_media_folder' );
+            $attachment_ids = get_objects_in_term( $folder_id, 'mddr_media_folder' );
             foreach ( (array) $attachment_ids as $id ) :
                 $file = get_attached_file( $id );
                 if ( $file && file_exists( $file ) ) :
@@ -79,7 +79,7 @@ if ( ! class_exists( 'WPMN_Media_Download' ) ) :
 
             // Subfolders
             $children = get_terms( array(
-                'taxonomy'   => 'wpmn_media_folder',
+                'taxonomy'   => 'mddr_media_folder',
                 'parent'     => $folder_id,
                 'hide_empty' => false,
             ) );
@@ -95,6 +95,6 @@ if ( ! class_exists( 'WPMN_Media_Download' ) ) :
 
     }
 
-    new WPMN_Media_Download();
+    new MDDR_Media_Download();
 
 endif;

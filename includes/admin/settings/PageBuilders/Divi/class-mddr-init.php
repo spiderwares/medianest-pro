@@ -3,15 +3,15 @@
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-if ( ! class_exists( 'WPMN_Divi_Init' ) ) :
+if ( ! class_exists( 'MDDR_Divi_Init' ) ) :
 
     /**
-     * Main WPMN_Divi_Init Class
+     * Main MDDR_Divi_Init Class
      *
-     * @class WPMN_Divi_Init
+     * @class MDDR_Divi_Init
      * @version 1.0.0
      */
-    class WPMN_Divi_Init {
+    class MDDR_Divi_Init {
 
         /**
          * The single instance of the class
@@ -21,7 +21,7 @@ if ( ! class_exists( 'WPMN_Divi_Init' ) ) :
         /**
          * Get the single instance
          *
-         * @return WPMN_Divi_Init
+         * @return MDDR_Divi_Init
          */
         public static function getInstance() {
             if (null == self::$instance) :
@@ -53,9 +53,9 @@ if ( ! class_exists( 'WPMN_Divi_Init' ) ) :
          */
         public function register_modules() {
             if (class_exists('ET_Builder_Module')) :
-                require_once(WPMN_PRO_PATH . 'includes/admin/settings/PageBuilders/Divi/modules/class-wpmn-gallery-module.php');
+                require_once(MDDR_PRO_PATH . 'includes/admin/settings/PageBuilders/Divi/modules/class-mddr-gallery-module.php');
                 
-                $gallery_module = new WPMN_Divi_Gallery_Module();
+                $gallery_module = new MDDR_Divi_Gallery_Module();
             endif;
         }
 
@@ -64,14 +64,14 @@ if ( ! class_exists( 'WPMN_Divi_Init' ) ) :
          */
         public function frontend_styles() {
             wp_enqueue_style(
-                'wpmn-frontend',
-                WPMN_URL . 'includes/admin/settings/PageBuilders/Elementor/assets/css/wpmn-frontend.css',
+                'mddr-frontend',
+                MDDR_URL . 'includes/admin/settings/PageBuilders/Elementor/assets/css/mddr-frontend.css',
                 array(),
-                WPMN_VERSION
+                MDDR_VERSION
             );
         }
     }
 
-    WPMN_Divi_Init::getInstance();
+    MDDR_Divi_Init::getInstance();
 
 endif;

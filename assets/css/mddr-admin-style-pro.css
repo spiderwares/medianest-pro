@@ -1,13 +1,13 @@
 /*--------------------------- Checkbox Field ---------------------------*/
 
-.wpmn_checkbox_field {
+.mddr_checkbox_field {
     line-height: 1.7rem;
 }
 
 /*--------------------------- Sort Menu ---------------------------*/
 
-.wpmn_sort_menu_submenu,
-.wpmn_sort_menu_nested {
+.mddr_sort_menu_submenu,
+.mddr_sort_menu_nested {
     display: none;
     position: absolute;
     left: 100%;
@@ -22,48 +22,48 @@
     z-index: 1001;
 }
 
-.wpmn_sort_menu_item.has-submenu:hover>.wpmn_sort_menu_submenu,
-.wpmn_sort_menu_subitem.has-nested:hover>.wpmn_sort_menu_nested {
+.mddr_sort_menu_item.has-submenu:hover>.mddr_sort_menu_submenu,
+.mddr_sort_menu_subitem.has-nested:hover>.mddr_sort_menu_nested {
     display: block;
 }
 
-.wpmn_sort_menu_submenu li,
-.wpmn_sort_menu_nested li {
+.mddr_sort_menu_submenu li,
+.mddr_sort_menu_nested li {
     padding: 8px 12px;
     cursor: pointer;
     color: #1d2327;
     font-size: 13px;
 }
 
-.wpmn_sort_menu_item>span {
+.mddr_sort_menu_item>span {
     color: #2271b1 !important;
 }
 
-.wpmn_sort_menu_submenu li.is-active,
-.wpmn_sort_menu_nested li.is-active {
+.mddr_sort_menu_submenu li.is-active,
+.mddr_sort_menu_nested li.is-active {
     color: #2271b1 !important;
 }
 
-.wpmn_sort_menu_subitem.is-active>span {
+.mddr_sort_menu_subitem.is-active>span {
     color: #2271b1 !important;
 }
 
-.wpmn_sort_menu_submenu li:hover,
-.wpmn_sort_menu_nested li:hover {
+.mddr_sort_menu_submenu li:hover,
+.mddr_sort_menu_nested li:hover {
     background: #f0f0f1;
 }
 
-.wpmn_sort_menu_subitem:hover {
+.mddr_sort_menu_subitem:hover {
     background: #f0f0f1;
 }
 
-.wpmn_sort_menu_subitem .dashicons {
+.mddr_sort_menu_subitem .dashicons {
     font-size: 16px;
     width: 16px;
     height: 16px;
 }
 
-.wpmn_sort_menu_subitem {
+.mddr_sort_menu_subitem {
     position: relative;
     padding: 8px 12px;
     cursor: pointer;
@@ -74,11 +74,11 @@
     font-size: 13px;
 }
 
-.wpmn_sort_menu_subitem:hover {
+.mddr_sort_menu_subitem:hover {
     background: #f0f0f1;
 }
 
-.wpmn_context_menu_item.has-submenu {
+.mddr_context_menu_item.has-submenu {
     position: relative;
     padding: 0 !important;
     overflow: visible !important;
@@ -86,7 +86,7 @@
 
 /*--------------------------- Menu Label ---------------------------*/
 
-.wpmn_menu_label {
+.mddr_menu_label {
     display: flex;
     align-items: center;
     padding: 8px 12px;
@@ -96,7 +96,7 @@
     justify-content: space-between;
 }
 
-.wpmn_menu_label .wpmn_submenu_arrow {
+.mddr_menu_label .mddr_submenu_arrow {
     font-size: 14px;
     width: 14px;
     height: 14px;
@@ -104,7 +104,7 @@
     line-height: inherit;
 }
 
-.wpmn_menu_label {
+.mddr_menu_label {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -114,95 +114,95 @@
 /*--------------------------- Themes ---------------------------*/
 
 /* Dropbox Theme */
-.wpmn_theme_dropbox .wpmn_folder_icon,
-.wpmn_theme_dropbox .wpmn_all_files_icon,
-.wpmn_theme_dropbox .wpmn_uncategorized_icon,
-.wpmn_theme_dropbox .wpmn_search_icon {
+.mddr_theme_dropbox .mddr_folder_icon,
+.mddr_theme_dropbox .mddr_all_files_icon,
+.mddr_theme_dropbox .mddr_uncategorized_icon,
+.mddr_theme_dropbox .mddr_search_icon {
     filter: invert(7%) sepia(100%) saturate(5200%) hue-rotate(236deg) brightness(96%) contrast(101%);
 }
 
-.wpmn_theme_dropbox .wpmn_folder_button.is-active {
+.mddr_theme_dropbox .mddr_folder_button.is-active {
     background-color: #e5e4fd;
     color: #000 !important;
 }
 
-.wpmn_theme_dropbox .wpmn_rename_dashicon,
-.wpmn_theme_dropbox .wpmn_delete_dashicon {
+.mddr_theme_dropbox .mddr_rename_dashicon,
+.mddr_theme_dropbox .mddr_delete_dashicon {
     color: #0061ff;
 }
 
 /* Windows Theme */
-.wpmn_theme_windows .wpmn_all_files_icon {
+.mddr_theme_windows .mddr_all_files_icon {
     filter: invert(33%) sepia(78%) saturate(950%) hue-rotate(185deg) brightness(95%) contrast(105%);
 }
 
-.wpmn_theme_windows .wpmn_uncategorized_icon {
+.mddr_theme_windows .mddr_uncategorized_icon {
     filter: invert(30%) sepia(90%) saturate(1500%) hue-rotate(100deg) brightness(85%) contrast(110%);
 }
 
-.wpmn_theme_windows .wpmn_folder_icon,
-.wpmn_theme_windows .wpmn_search_icon {
+.mddr_theme_windows .mddr_folder_icon,
+.mddr_theme_windows .mddr_search_icon {
     filter: invert(70%) sepia(80%) saturate(500%) hue-rotate(0deg) brightness(90%) contrast(110%);
 }
 
-.wpmn_theme_windows .wpmn_folder_button.is-active {
+.mddr_theme_windows .mddr_folder_button.is-active {
     background-color: #cfe3f3;
     color: #000 !important;
 }
 
-.wpmn_theme_windows .wpmn_sort_icon,
-.wpmn_theme_windows .wpmn_more_icon,
-.wpmn_theme_dropbox .wpmn_sort_icon,
-.wpmn_theme_dropbox .wpmn_more_icon {
+.mddr_theme_windows .mddr_sort_icon,
+.mddr_theme_windows .mddr_more_icon,
+.mddr_theme_dropbox .mddr_sort_icon,
+.mddr_theme_dropbox .mddr_more_icon {
     filter: invert(0%) sepia(0%) saturate(100%) hue-rotate(0deg) brightness(100%) contrast(100%);
 }
 
-.wpmn_theme_windows .wpmn_action_wrapper,
-.wpmn_theme_dropbox .wpmn_action_wrapper {
+.mddr_theme_windows .mddr_action_wrapper,
+.mddr_theme_dropbox .mddr_action_wrapper {
     border: 1px solid #ddd !important;
 }
 
-.wpmn_theme_windows .wpmn_media_sidebar_action_sort,
-.wpmn_theme_windows .wpmn_media_sidebar_action_more {
+.mddr_theme_windows .mddr_media_sidebar_action_sort,
+.mddr_theme_windows .mddr_media_sidebar_action_more {
     border-radius: 0 !important;
     background: #fff;
     border-color: #ddd;
 }
 
-.wpmn_theme_dropbox .wpmn_media_sidebar_action_sort,
-.wpmn_theme_dropbox .wpmn_media_sidebar_action_more {
+.mddr_theme_dropbox .mddr_media_sidebar_action_sort,
+.mddr_theme_dropbox .mddr_media_sidebar_action_more {
     border-radius: 0 !important;
     background: #e4e3e3 !important;
 }
 
-.wpmn_theme_dropbox .wpmn_media_sidebar_action_sort:hover,
-.wpmn_theme_dropbox .wpmn_media_sidebar_action_more:hover {
+.mddr_theme_dropbox .mddr_media_sidebar_action_sort:hover,
+.mddr_theme_dropbox .mddr_media_sidebar_action_more:hover {
     background: #fff !important;
     transition: all 0.3s ease;
 }
 
-.wpmn_theme_windows .wpmn_media_sidebar_action_sort:hover,
-.wpmn_theme_windows .wpmn_media_sidebar_action_more:hover {
+.mddr_theme_windows .mddr_media_sidebar_action_sort:hover,
+.mddr_theme_windows .mddr_media_sidebar_action_more:hover {
     background: #e6e5e5 !important;
     transition: all 0.3s ease;
 }
 
 /* Icon Switching for windows and dropbox themes */
-.wpmn_theme_windows .wpmn_new_folder_icon,
-.wpmn_theme_windows .wpmn_rename_icon,
-.wpmn_theme_windows .wpmn_delete_icon,
-.wpmn_theme_dropbox .wpmn_new_folder_icon,
-.wpmn_theme_dropbox .wpmn_rename_icon,
-.wpmn_theme_dropbox .wpmn_delete_icon {
+.mddr_theme_windows .mddr_new_folder_icon,
+.mddr_theme_windows .mddr_rename_icon,
+.mddr_theme_windows .mddr_delete_icon,
+.mddr_theme_dropbox .mddr_new_folder_icon,
+.mddr_theme_dropbox .mddr_rename_icon,
+.mddr_theme_dropbox .mddr_delete_icon {
     display: none !important;
 }
 
-.wpmn_theme_windows .wpmn_new_folders_icon,
-.wpmn_theme_windows .wpmn_rename_dashicon,
-.wpmn_theme_windows .wpmn_delete_dashicon,
-.wpmn_theme_dropbox .wpmn_new_folders_icon,
-.wpmn_theme_dropbox .wpmn_rename_dashicon,
-.wpmn_theme_dropbox .wpmn_delete_dashicon {
+.mddr_theme_windows .mddr_new_folders_icon,
+.mddr_theme_windows .mddr_rename_dashicon,
+.mddr_theme_windows .mddr_delete_dashicon,
+.mddr_theme_dropbox .mddr_new_folders_icon,
+.mddr_theme_dropbox .mddr_rename_dashicon,
+.mddr_theme_dropbox .mddr_delete_dashicon {
     display: inline-block !important;
     margin-right: 5px;
     font-size: 18px;
@@ -211,110 +211,110 @@
     vertical-align: middle;
 }
 
-.wpmn_theme_windows .wpmn_rename_dashicon,
-.wpmn_theme_windows .wpmn_delete_dashicon,
-.wpmn_theme_dropbox .wpmn_rename_dashicon,
-.wpmn_theme_dropbox .wpmn_delete_dashicon {
+.mddr_theme_windows .mddr_rename_dashicon,
+.mddr_theme_windows .mddr_delete_dashicon,
+.mddr_theme_dropbox .mddr_rename_dashicon,
+.mddr_theme_dropbox .mddr_delete_dashicon {
     color: #000;
 }
 
-.wpmn_theme_windows .wpmn_new_folders_icon,
-.wpmn_theme_dropbox .wpmn_new_folders_icon {
+.mddr_theme_windows .mddr_new_folders_icon,
+.mddr_theme_dropbox .mddr_new_folders_icon {
     margin-right: 0;
 }
 
-.wpmn_theme_dropbox .wpmn_media_sidebar_action_rename,
-.wpmn_theme_dropbox .wpmn_media_sidebar_action_delete,
-button.wpmn_media_sidebar_action_rename,
-button.wpmn_media_sidebar_action_delete {
+.mddr_theme_dropbox .mddr_media_sidebar_action_rename,
+.mddr_theme_dropbox .mddr_media_sidebar_action_delete,
+button.mddr_media_sidebar_action_rename,
+button.mddr_media_sidebar_action_delete {
     color: #000;
     border-color: #ddd;
     border-radius: 0 !important;
     background: #fff;
 }
 
-.wpmn_theme_dropbox .wpmn_media_sidebar_action_rename:hover,
-.wpmn_theme_dropbox .wpmn_media_sidebar_action_delete:hover,
-button.wpmn_media_sidebar_action_rename:hover,
-button.wpmn_media_sidebar_action_delete:hover {
+.mddr_theme_dropbox .mddr_media_sidebar_action_rename:hover,
+.mddr_theme_dropbox .mddr_media_sidebar_action_delete:hover,
+button.mddr_media_sidebar_action_rename:hover,
+button.mddr_media_sidebar_action_delete:hover {
     background: #fff;
     transition: all 0.3s ease;
     border-color: #ddd;
 }
 
-.wpmn_theme_dropbox .wpmn_media_sidebar_action_rename,
-.wpmn_theme_dropbox .wpmn_media_sidebar_action_delete,
-button.wpmn_media_sidebar_action_rename,
-button.wpmn_media_sidebar_action_delete {
+.mddr_theme_dropbox .mddr_media_sidebar_action_rename,
+.mddr_theme_dropbox .mddr_media_sidebar_action_delete,
+button.mddr_media_sidebar_action_rename,
+button.mddr_media_sidebar_action_delete {
     border-color: #ddd;
     border-radius: 0 !important;
     background: #e4e3e3;
 }
 
-.wpmn_theme_windows .wpmn_media_sidebar_action_rename,
-.wpmn_theme_windows .wpmn_media_sidebar_action_delete,
-button.wpmn_media_sidebar_action_rename,
-button.wpmn_media_sidebar_action_delete {
+.mddr_theme_windows .mddr_media_sidebar_action_rename,
+.mddr_theme_windows .mddr_media_sidebar_action_delete,
+button.mddr_media_sidebar_action_rename,
+button.mddr_media_sidebar_action_delete {
     color: #000;
     border-color: #ddd;
     border-radius: 0 !important;
     background: #fff;
 }
 
-.wpmn_theme_windows .wpmn_media_sidebar_action_rename:hover,
-.wpmn_theme_windows .wpmn_media_sidebar_action_delete:hover,
-button.wpmn_media_sidebar_action_rename:hover,
-button.wpmn_media_sidebar_action_delete:hover {
+.mddr_theme_windows .mddr_media_sidebar_action_rename:hover,
+.mddr_theme_windows .mddr_media_sidebar_action_delete:hover,
+button.mddr_media_sidebar_action_rename:hover,
+button.mddr_media_sidebar_action_delete:hover {
     background: #e6e5e5;
     transition: all 0.3s ease;
     border-color: #ddd;
 }
 
-.wpmn_theme_default .wpmn_media_sidebar_action_rename,
-.wpmn_theme_default .wpmn_media_sidebar_action_delete,
-button.wpmn_media_sidebar_action_rename,
-button.wpmn_media_sidebar_action_delete {
+.mddr_theme_default .mddr_media_sidebar_action_rename,
+.mddr_theme_default .mddr_media_sidebar_action_delete,
+button.mddr_media_sidebar_action_rename,
+button.mddr_media_sidebar_action_delete {
     border-radius: 4px !important;
 }
 
 
-.wpmn_theme_windows .wpmn_media_sidebar_action_rename:hover,
-.wpmn_theme_windows .wpmn_media_sidebar_action_delete:hover,
-.wpmn_theme_dropbox .wpmn_media_sidebar_action_rename:hover,
-.wpmn_theme_dropbox .wpmn_media_sidebar_action_delete:hover {
+.mddr_theme_windows .mddr_media_sidebar_action_rename:hover,
+.mddr_theme_windows .mddr_media_sidebar_action_delete:hover,
+.mddr_theme_dropbox .mddr_media_sidebar_action_rename:hover,
+.mddr_theme_dropbox .mddr_media_sidebar_action_delete:hover {
     color: #000;
 }
 
-.wpmn_theme_windows .wpmn_media_sidebar_action_rename:focus,
-.wpmn_theme_windows .wpmn_media_sidebar_action_delete:focus,
-.wpmn_theme_dropbox .wpmn_media_sidebar_action_rename:focus,
-.wpmn_theme_dropbox .wpmn_media_sidebar_action_delete:focus {
+.mddr_theme_windows .mddr_media_sidebar_action_rename:focus,
+.mddr_theme_windows .mddr_media_sidebar_action_delete:focus,
+.mddr_theme_dropbox .mddr_media_sidebar_action_rename:focus,
+.mddr_theme_dropbox .mddr_media_sidebar_action_delete:focus {
     border-color: #ddd;
     box-shadow: none !important;
     color: #000 !important;
 }
 
-.wpmn_theme_windows .wpmn_media_sidebar_actions,
-.wpmn_theme_dropbox .wpmn_media_sidebar_actions {
+.mddr_theme_windows .mddr_media_sidebar_actions,
+.mddr_theme_dropbox .mddr_media_sidebar_actions {
     background: none !important;
     padding: 0;
     border: none;
     border-radius: 0;
 }
 
-.wpmn_theme_dropbox .wpmn_media_sidebar_new_folder,
-.wpmn_theme_dropbox .wpmn_media_sidebar_new_folder:hover {
+.mddr_theme_dropbox .mddr_media_sidebar_new_folder,
+.mddr_theme_dropbox .mddr_media_sidebar_new_folder:hover {
     background-color: #1203fe;
     border-radius: 0 !important;
 }
 
 /*--------------------------- Color Picker ---------------------------*/
 
-.wpmn_context_menu_item.has-submenu {
+.mddr_context_menu_item.has-submenu {
     position: relative;
 }
 
-.wpmn_color_picker_dropdown {
+.mddr_color_picker_dropdown {
     display: none;
     position: absolute;
     left: 100%;
@@ -327,17 +327,17 @@ button.wpmn_media_sidebar_action_delete {
     z-index: 100003;
 }
 
-.wpmn_context_menu_item.has-submenu:hover>.wpmn_color_picker_dropdown {
+.mddr_context_menu_item.has-submenu:hover>.mddr_color_picker_dropdown {
     display: block;
 }
 
-.wpmn_color_grid {
+.mddr_color_grid {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     gap: 8px;
 }
 
-.wpmn_color_option {
+.mddr_color_option {
     width: 30px;
     height: 30px;
     cursor: pointer;
@@ -345,23 +345,23 @@ button.wpmn_media_sidebar_action_delete {
     transition: transform 0.1s;
 }
 
-.wpmn_color_option:hover {
+.mddr_color_option:hover {
     transform: scale(1.2);
 }
 
-.wpmn_color_picker_dropdown hr {
+.mddr_color_picker_dropdown hr {
     margin: 12px 0;
     border: none;
     border-top: 1px solid #f0f0f1;
 }
 
-.wpmn_custom_color_row {
+.mddr_custom_color_row {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.wpmn_current_color_preview {
+.mddr_current_color_preview {
     width: 32px;
     height: 32px;
     border-radius: 5px;
@@ -373,14 +373,14 @@ button.wpmn_media_sidebar_action_delete {
     border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.wpmn_current_color_preview .dashicons {
+.mddr_current_color_preview .dashicons {
     color: #fff;
     font-size: 20px;
     width: 20px;
     height: 20px;
 }
 
-.wpmn_refresh_color {
+.mddr_refresh_color {
     cursor: pointer;
     color: #646970;
     transition: color 0.1s;
@@ -388,18 +388,18 @@ button.wpmn_media_sidebar_action_delete {
     margin-left: 10rem;
 }
 
-.wpmn_refresh_color:hover {
+.mddr_refresh_color:hover {
     color: #1d2327;
 }
 
-.wpmn_submenu_arrow {
+.mddr_submenu_arrow {
     font-size: 16px;
     color: #a7aaad;
 }
 
 /*--------------------------- Pin to Top ---------------------------*/
 
-.wpmn_pin_indicator {
+.mddr_pin_indicator {
     font-size: 14px !important;
     width: 14px !important;
     height: 14px !important;
@@ -408,11 +408,11 @@ button.wpmn_media_sidebar_action_delete {
     opacity: 0.8;
 }
 
-.wpmn_pinned_folder {
+.mddr_pinned_folder {
     position: relative;
 }
 
-.wpmn_pinned_folder::before {
+.mddr_pinned_folder::before {
     content: '';
     position: absolute;
     left: 0;
@@ -423,28 +423,28 @@ button.wpmn_media_sidebar_action_delete {
     border-radius: 0 2px 2px 0;
 }
 
-.wpmn_theme_dropbox .wpmn_pinned_folder::before {
+.mddr_theme_dropbox .mddr_pinned_folder::before {
     background: linear-gradient(180deg, #0061ff 0%, #0047b3 100%);
 }
 
-.wpmn_theme_windows .wpmn_pinned_folder::before {
+.mddr_theme_windows .mddr_pinned_folder::before {
     background: linear-gradient(180deg, #fcd133 0%, #d4a91f 100%);
 }
 
-.wpmn_pinned_folder .wpmn_folder_name {
+.mddr_pinned_folder .mddr_folder_name {
     font-weight: 500;
 }
 
-.wpmn_context_menu_item[data-action="pin-folder"] .dashicons {
+.mddr_context_menu_item[data-action="pin-folder"] .dashicons {
     color: #50575e;
 }
 
 /*--------------------------- Bulk Select ---------------------------*/
 
-.wpmn_theme_dropbox .wpmn_media_sidebar .wpmn_bulk_cancel_btn,
-.wpmn_theme_windows .wpmn_media_sidebar .wpmn_bulk_cancel_btn,
-.wpmn_theme_dropbox .wpmn_bulk_cancel_btn,
-.wpmn_theme_windows .wpmn_bulk_cancel_btn {
+.mddr_theme_dropbox .mddr_media_sidebar .mddr_bulk_cancel_btn,
+.mddr_theme_windows .mddr_media_sidebar .mddr_bulk_cancel_btn,
+.mddr_theme_dropbox .mddr_bulk_cancel_btn,
+.mddr_theme_windows .mddr_bulk_cancel_btn {
     color: #000 !important;
     border: 1px solid #ddd !important;
     border-radius: 0 !important;
@@ -453,25 +453,25 @@ button.wpmn_media_sidebar_action_delete {
     text-shadow: none !important;
 }
 
-.wpmn_theme_dropbox .wpmn_media_sidebar .wpmn_bulk_cancel_btn,
-.wpmn_theme_dropbox .wpmn_bulk_cancel_btn {
+.mddr_theme_dropbox .mddr_media_sidebar .mddr_bulk_cancel_btn,
+.mddr_theme_dropbox .mddr_bulk_cancel_btn {
     background: #e4e3e3 !important;
 }
 
-.wpmn_theme_windows .wpmn_media_sidebar .wpmn_bulk_cancel_btn,
-.wpmn_theme_windows .wpmn_bulk_cancel_btn {
+.mddr_theme_windows .mddr_media_sidebar .mddr_bulk_cancel_btn,
+.mddr_theme_windows .mddr_bulk_cancel_btn {
     background: #fff !important;
 }
 
-.wpmn_theme_dropbox .wpmn_media_sidebar .wpmn_bulk_cancel_btn:hover,
-.wpmn_theme_dropbox .wpmn_bulk_cancel_btn:hover {
+.mddr_theme_dropbox .mddr_media_sidebar .mddr_bulk_cancel_btn:hover,
+.mddr_theme_dropbox .mddr_bulk_cancel_btn:hover {
     background: #fff !important;
     transition: all 0.3s ease;
     border-color: #ddd !important;
 }
 
-.wpmn_theme_windows .wpmn_media_sidebar .wpmn_bulk_cancel_btn:hover,
-.wpmn_theme_windows .wpmn_bulk_cancel_btn:hover {
+.mddr_theme_windows .mddr_media_sidebar .mddr_bulk_cancel_btn:hover,
+.mddr_theme_windows .mddr_bulk_cancel_btn:hover {
     background: #e6e5e5 !important;
     transition: all 0.3s ease;
     border-color: #ddd !important;

@@ -3,14 +3,14 @@
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-if ( ! class_exists( 'WPMN_Divi_Gallery_Module' ) ) :
+if ( ! class_exists( 'MDDR_Divi_Gallery_Module' ) ) :
 
-    class WPMN_Divi_Gallery_Module extends ET_Builder_Module {
+    class MDDR_Divi_Gallery_Module extends ET_Builder_Module {
 
-        public $slug  = 'medianest_gallery';
+        public $slug  = 'media_directory_gallery';
 
         public function init() {
-            $this->name = esc_html__( 'MediaNest Gallery', 'medianest' );
+            $this->name = esc_html__( 'Media Directory Gallery', 'medianest' );
         }
 
         public function get_settings_modal_toggles() {
@@ -106,7 +106,7 @@ if ( ! class_exists( 'WPMN_Divi_Gallery_Module' ) ) :
         }
 
         private function get_folder_options() {
-            $folders = \WPMN_Media_Folders::folder_tree('folder_only', 'attachment');
+            $folders = \MDDR_Media_Folders::folder_tree('folder_only', 'attachment');
             $options = array(
                 '0' => esc_html__( 'Select Folder', 'medianest' ),
             );
@@ -148,13 +148,13 @@ if ( ! class_exists( 'WPMN_Divi_Gallery_Module' ) ) :
             $folder_id = (int) str_replace( 'id_', '', $folder_id_raw );
 
             if ( $folder_id <= 0 ) :
-                return sprintf( '<div class="wpmn-gallery-error">%s</div>', esc_html__( 'Please select a folder', 'medianest' ) );
+                return sprintf( '<div class="mddr-gallery-error">%s</div>', esc_html__( 'Please select a folder', 'medianest' ) );
             endif;
 
-            $attachment_ids = get_objects_in_term( $folder_id, 'wpmn_media_folder' );
+            $attachment_ids = get_objects_in_term( $folder_id, 'mddr_media_folder' );
             
             if ( empty( $attachment_ids ) || is_wp_error( $attachment_ids ) ) :
-                return sprintf( '<div class="wpmn-gallery-empty">%s</div>', esc_html__( 'No images found in this folder', 'medianest' ) );
+                return sprintf( '<div class="mddr-gallery-empty">%s</div>', esc_html__( 'No images found in this folder', 'medianest' ) );
             endif;
 
             $args = array(
@@ -170,7 +170,7 @@ if ( ! class_exists( 'WPMN_Divi_Gallery_Module' ) ) :
             
             if ( ! $query->have_posts() ) :
                 wp_reset_postdata();
-                return sprintf( '<div class="wpmn-gallery-empty">%s</div>', esc_html__( 'No images found in this folder', 'medianest' ) );
+                return sprintf( '<div class="mddr-gallery-empty">%s</div>', esc_html__( 'No images found in this folder', 'medianest' ) );
             endif;
 
             // Prepare settings for the template
@@ -181,7 +181,7 @@ if ( ! class_exists( 'WPMN_Divi_Gallery_Module' ) ) :
             );
 
             ob_start();
-            include WPMN_PATH . 'includes/admin/settings/PageBuilders/Elementor/views/wpmn-gallery.php';
+            include MDDR_PATH . 'includes/admin/settings/PageBuilders/Elementor/views/mddr-gallery.php';
             $output = ob_get_clean();
 
             wp_reset_postdata();

@@ -3,15 +3,15 @@
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-if ( ! class_exists( 'WPMN_Settings_Pro' ) ) :
+if ( ! class_exists( 'MDDR_Settings_Pro' ) ) :
 
     /**
-     * Main WPMN_Settings_Pro Class
+     * Main MDDR_Settings_Pro Class
      *
-     * @class WPMN_Settings_Pro
+     * @class MDDR_Settings_Pro
      * @version 1.0.0
      */
-    class WPMN_Settings_Pro {
+    class MDDR_Settings_Pro {
 
         /**
          * Constructor for the class.
@@ -26,11 +26,11 @@ if ( ! class_exists( 'WPMN_Settings_Pro' ) ) :
          * 
          */
         public function events_handler() {
-            add_action( 'wpmn_settings_tabs', [ $this, 'add_pro_tabs' ] );
-            add_action( 'wpmn_render_post_type_tab_content', [ $this, 'render_post_type_tab' ] );
-            add_filter( 'wpmn_settings_fields', [ $this, 'settings_fields_pro' ] );
-            add_filter( 'wpmn_post_type_fields', [ $this, 'post_type_field_pro' ], 10, 4 );
-            add_filter( 'wpmn_checkbox_field', [ $this, 'load_checkbox_field' ], 10, 4 );
+            add_action( 'mddr_settings_tabs', [ $this, 'add_pro_tabs' ] );
+            add_action( 'mddr_render_post_type_tab_content', [ $this, 'render_post_type_tab' ] );
+            add_filter( 'mddr_settings_fields', [ $this, 'settings_fields_pro' ] );
+            add_filter( 'mddr_post_type_fields', [ $this, 'post_type_field_pro' ], 10, 4 );
+            add_filter( 'mddr_checkbox_field', [ $this, 'load_checkbox_field' ], 10, 4 );
         }
 
         /**
@@ -38,7 +38,7 @@ if ( ! class_exists( 'WPMN_Settings_Pro' ) ) :
          * 
          */
         public function add_pro_tabs( $active_tab ) {
-            include WPMN_PRO_PATH . 'includes/admin/settings/views/file-menu-pro.php';
+            include MDDR_PRO_PATH . 'includes/admin/settings/views/file-menu-pro.php';
         }
 
         /**
@@ -50,13 +50,13 @@ if ( ! class_exists( 'WPMN_Settings_Pro' ) ) :
             unset($fields['theme_design']['disabled_options']);
 
             $fields['folder_count_mode'] = array(
-                'title'      => esc_html__( 'Folder Count Mode', 'medianest-pro' ),
-                'field_type' => 'wpmnselect',
+                'title'      => esc_html__( 'Folder Count Mode', 'media-directory-pro' ),
+                'field_type' => 'mddrselect',
                 'default'    => 'folder_only',
-                'name'       => 'wpmn_settings[folder_count_mode]',
+                'name'       => 'mddr_settings[folder_count_mode]',
                 'options'    => array(
-                    'folder_only'  => esc_html__( 'Count only files in this folder', 'medianest-pro' ),
-                    'all_files'    => esc_html__( 'Count files in parent and subfolders', 'medianest-pro' ),
+                    'folder_only'  => esc_html__( 'Count only files in this folder', 'media-directory-pro' ),
+                    'all_files'    => esc_html__( 'Count files in parent and subfolders', 'media-directory-pro' ),
                 ),
             );
 
@@ -78,10 +78,10 @@ if ( ! class_exists( 'WPMN_Settings_Pro' ) ) :
             $fields = is_array( $fields ) ? $fields : [];
 
             $fields['post_types'] = array(
-                'title'      => esc_html__( 'Choose MediaNest Post Types', 'medianest-pro' ),
-                'field_type' => 'wpmncheckbox',
+                'title'      => esc_html__( 'Choose MediaNest Post Types', 'media-directory-pro' ),
+                'field_type' => 'mddrcheckbox',
                 'default'    => array( '' ),
-                'name'       => 'wpmn_settings[post_types]',
+                'name'       => 'mddr_settings[post_types]',
                 'options'    => $this->get_post_types(),
             );
             
@@ -125,46 +125,46 @@ if ( ! class_exists( 'WPMN_Settings_Pro' ) ) :
             return $post_type_options;
         }
 
-        public function load_checkbox_field( $wpmn_html, $wpmn_field, $wpmn_field_Val, $wpmn_field_Key ) {
+        public function load_checkbox_field( $mddr_html, $mddr_field, $mddr_field_Val, $mddr_field_Key ) {
             ?>
             <td>
-                <div class="wpmn_checkbox_field">
-                    <?php if ( isset( $wpmn_field['options'] ) && is_array( $wpmn_field['options'] ) ) :
-                        $wpmn_current_values = isset( $wpmn_field_Val ) ? $wpmn_field_Val : ( isset( $wpmn_field['default'] ) ? $wpmn_field['default'] : array() );
+                <div class="mddr_checkbox_field">
+                    <?php if ( isset( $mddr_field['options'] ) && is_array( $mddr_field['options'] ) ) :
+                        $mddr_current_values = isset( $mddr_field_Val ) ? $mddr_field_Val : ( isset( $mddr_field['default'] ) ? $mddr_field['default'] : array() );
 
-                        if ( ! is_array( $wpmn_current_values ) ) :
-                            $wpmn_current_values = array();
+                        if ( ! is_array( $mddr_current_values ) ) :
+                            $mddr_current_values = array();
                         endif;
 
-                        foreach ( $wpmn_field['options'] as $wpmn_option_key => $wpmn_option_label ) :
-                            $wpmn_input_name  = ! empty( $wpmn_field['name'] ) ? $wpmn_field['name'] . '[]' : 'wpmn_settings[' . esc_attr( $wpmn_field_Key ) . '][]';
-                            $wpmn_checkbox_id = esc_attr( $wpmn_field_Key . '_' . $wpmn_option_key );
-                            $wpmn_is_checked  = in_array( $wpmn_option_key, $wpmn_current_values, true );
+                        foreach ( $mddr_field['options'] as $mddr_option_key => $mddr_option_label ) :
+                            $mddr_input_name  = ! empty( $mddr_field['name'] ) ? $mddr_field['name'] . '[]' : 'mddr_settings[' . esc_attr( $mddr_field_Key ) . '][]';
+                            $mddr_checkbox_id = esc_attr( $mddr_field_Key . '_' . $mddr_option_key );
+                            $mddr_is_checked  = in_array( $mddr_option_key, $mddr_current_values, true );
                         ?>
 
-                            <div class="wpmn_checkbox_item">
+                            <div class="mddr_checkbox_item">
                                 <input
                                     type="checkbox"
-                                    id="<?php echo esc_attr( $wpmn_checkbox_id ); ?>"
-                                    name="<?php echo esc_attr( $wpmn_input_name ); ?>"
-                                    value="<?php echo esc_attr( $wpmn_option_key ); ?>"
-                                    <?php checked( $wpmn_is_checked ); ?>
+                                    id="<?php echo esc_attr( $mddr_checkbox_id ); ?>"
+                                    name="<?php echo esc_attr( $mddr_input_name ); ?>"
+                                    value="<?php echo esc_attr( $mddr_option_key ); ?>"
+                                    <?php checked( $mddr_is_checked ); ?>
                                 />
 
-                                <label for="<?php echo esc_attr( $wpmn_checkbox_id ); ?>">
-                                    <?php echo esc_html( $wpmn_option_label ); ?>
+                                <label for="<?php echo esc_attr( $mddr_checkbox_id ); ?>">
+                                    <?php echo esc_html( $mddr_option_label ); ?>
                                 </label>
                             </div>
                         <?php endforeach;
                     endif; ?>
                 </div>
 
-                <p><?php echo isset( $wpmn_field['desc'] ) ? wp_kses_post( $wpmn_field['desc'] ) : ''; ?></p>
+                <p><?php echo isset( $mddr_field['desc'] ) ? wp_kses_post( $mddr_field['desc'] ) : ''; ?></p>
             </td>
             <?php
         }
     }
 
-    new WPMN_Settings_Pro();
+    new MDDR_Settings_Pro();
 
 endif;

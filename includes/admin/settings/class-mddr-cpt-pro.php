@@ -3,15 +3,15 @@
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-if ( ! class_exists( 'WPMN_CPT_Pro' ) ) :
+if ( ! class_exists( 'MDDR_CPT_Pro' ) ) :
 
     /**
-     * Main WPMN_CPT_Pro Class
+     * Main MDDR_CPT_Pro Class
      *
-     * @class WPMN_CPT_Pro
+     * @class MDDR_CPT_Pro
      * @version 1.0.0
      */
-    class WPMN_CPT_Pro {
+    class MDDR_CPT_Pro {
 
         /**
          * Settings.
@@ -32,8 +32,8 @@ if ( ! class_exists( 'WPMN_CPT_Pro' ) ) :
          * 
          */
         public function events_handler() {
-            $settings   = get_option( 'wpmn_settings', [] );
-            add_action( 'wpmn_media_library_init', array( $this, 'init_hooks' ) );
+            $settings   = get_option( 'mddr_settings', [] );
+            add_action( 'mddr_media_library_init', array( $this, 'init_hooks' ) );
         }
 
         public function init_hooks() {
@@ -46,8 +46,8 @@ if ( ! class_exists( 'WPMN_CPT_Pro' ) ) :
 
             foreach ( $post_types as $post_type ) :
                 add_meta_box(
-                    'wpmn_media_folder_metabox',
-                    esc_html__( 'MediaNest Folder', 'medianest-pro' ),
+                    'mddr_media_folder_metabox',
+                    esc_html__( 'MediaNest Folder', 'media-directory-pro' ),
                     array( $this, 'render_folder_metabox' ),
                     $post_type,
                     'side',
@@ -57,21 +57,21 @@ if ( ! class_exists( 'WPMN_CPT_Pro' ) ) :
         }
 
         public function render_folder_metabox( $post ) {
-            if ( ! class_exists( 'WPMN_Helper' ) ) return;
+            if ( ! class_exists( 'MDDR_Helper' ) ) return;
 
-            wp_nonce_field( 'wpmn_save_post_folder', 'wpmn_meta_box_nonce' );
-            $terms      = wp_get_object_terms( $post->ID, 'wpmn_media_folder' );
+            wp_nonce_field( 'mddr_save_post_folder', 'mddr_meta_box_nonce' );
+            $terms      = wp_get_object_terms( $post->ID, 'mddr_media_folder' );
             $selected   = ( isset( $terms[0] ) && isset( $terms[0]->term_id ) ) ? $terms[0]->term_id : 0;
-            $labels     = WPMN_Helper::get_folder_labels();
+            $labels     = MDDR_Helper::get_folder_labels();
 
             // Get only terms for this post type
             $include_terms = get_terms( array(
-                'taxonomy'   => 'wpmn_media_folder',
+                'taxonomy'   => 'mddr_media_folder',
                 'hide_empty' => false,
                 'fields'     => 'ids',
                 'meta_query' => array(
                     array(
-                        'key'     => 'wpmn_post_type',
+                        'key'     => 'mddr_post_type',
                         'value'   => $post->post_type,
                         'compare' => '=',
                     ),
@@ -79,10 +79,10 @@ if ( ! class_exists( 'WPMN_CPT_Pro' ) ) :
             ) );
 
             wp_dropdown_categories( array(
-                'taxonomy'          => 'wpmn_media_folder',
+                'taxonomy'          => 'mddr_media_folder',
                 'hide_empty'        => false,
-                'name'              => 'wpmn_media_folder_select',
-                'id'                => 'wpmn_media_folder_select',
+                'name'              => 'mddr_media_folder_select',
+                'id'                => 'mddr_media_folder_select',
                 'show_option_all'   => $labels['all'],
                 'show_option_none'  => $labels['uncategorized'],
                 'option_none_value' => '0',
@@ -93,23 +93,23 @@ if ( ! class_exists( 'WPMN_CPT_Pro' ) ) :
         }
 
         public function save_post_folder( $post_id ) {
-            if ( ! isset( $_POST['wpmn_meta_box_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wpmn_meta_box_nonce'] ) ), 'wpmn_save_post_folder' ) ) :
+            if ( ! isset( $_POST['mddr_meta_box_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['mddr_meta_box_nonce'] ) ), 'mddr_save_post_folder' ) ) :
                 return;
             endif;
 
             if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
             if ( ! current_user_can( 'edit_post', $post_id ) ) return;
 
-            $folder_id = isset( $_POST['wpmn_media_folder_select'] ) ? absint( $_POST['wpmn_media_folder_select'] ) : 0;
+            $folder_id = isset( $_POST['mddr_media_folder_select'] ) ? absint( $_POST['mddr_media_folder_select'] ) : 0;
             
             if ( $folder_id > 0 ) :
-                wp_set_object_terms( $post_id, array( $folder_id ), 'wpmn_media_folder' );
+                wp_set_object_terms( $post_id, array( $folder_id ), 'mddr_media_folder' );
             else :
-                wp_set_object_terms( $post_id, array(), 'wpmn_media_folder' );
+                wp_set_object_terms( $post_id, array(), 'mddr_media_folder' );
             endif;
         }
     }
 
-    new WPMN_CPT_Pro();
+    new MDDR_CPT_Pro();
 
 endif;

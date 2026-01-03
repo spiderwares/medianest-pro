@@ -7,19 +7,19 @@
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-if ( ! class_exists( 'WPMN_Install_Pro' ) ) :
+if ( ! class_exists( 'MDDR_Install_Pro' ) ) :
 
     /**
-     * WPMN_Install_Pro Class
+     * MDDR_Install_Pro Class
      *
      */
-    class WPMN_Install_Pro {
+    class MDDR_Install_Pro {
 
         /**
          * Hook into WordPress actions and filters.
          */
         public static function init() {
-            add_filter( 'plugin_action_links_' . plugin_basename( WPMN_PRO_FILE ), array( __CLASS__, 'plugin_action_links' ) );
+            add_filter( 'plugin_action_links_' . plugin_basename( MDDR_PRO_FILE ), array( __CLASS__, 'plugin_action_links' ) );
             add_filter( 'plugin_row_meta', array( __CLASS__, 'plugin_row_meta' ), 10, 2 );
         }
 
@@ -31,7 +31,7 @@ if ( ! class_exists( 'WPMN_Install_Pro' ) ) :
          * @return array Modified array of action links.
          */
         public static function plugin_row_meta( $links, $file ) {
-            if ( plugin_basename( WPMN_PRO_FILE ) === $file ) :
+            if ( plugin_basename( MDDR_PRO_FILE ) === $file ) :
                 $doc_url   = esc_url( 'https://documentation.cosmicinfosoftware.com/medianest/documents/getting-started/introduction/' );
                 $doc_label = esc_html( 'Documentation' );
         
@@ -56,11 +56,11 @@ if ( ! class_exists( 'WPMN_Install_Pro' ) ) :
             endif;
 
             // Restore post types from backup if exists
-            $backup = get_option( 'wpmn_pro_post_types_backup' );
+            $backup = get_option( 'mddr_pro_post_types_backup' );
             if ( $backup ) {
-                $settings = get_option( 'wpmn_settings', [] );
+                $settings = get_option( 'mddr_settings', [] );
                 $settings['post_types'] = $backup;
-                update_option( 'wpmn_settings', $settings );
+                update_option( 'mddr_settings', $settings );
             }
         }
 
@@ -68,13 +68,13 @@ if ( ! class_exists( 'WPMN_Install_Pro' ) ) :
          * Deactivate plugin.
          */
         public static function deactivate() {
-            $settings = get_option( 'wpmn_settings', [] );
+            $settings = get_option( 'mddr_settings', [] );
             
             // Backup and remove post types on deactivation
             if ( isset( $settings['post_types'] ) ) {
-                update_option( 'wpmn_pro_post_types_backup', $settings['post_types'] );
+                update_option( 'mddr_pro_post_types_backup', $settings['post_types'] );
                 unset( $settings['post_types'] );
-                update_option( 'wpmn_settings', $settings );
+                update_option( 'mddr_settings', $settings );
             }
         }
 
@@ -88,15 +88,15 @@ if ( ! class_exists( 'WPMN_Install_Pro' ) ) :
             $action_links = array(
                 'settings' => sprintf(
                     '<a href="%s" aria-label="%s">%s</a>',
-                    admin_url( 'admin.php?page=cosmic-wpmn' ),
-                    esc_attr__( 'Settings', 'medianest-pro' ),
-                    esc_html__( 'Settings', 'medianest-pro' )
+                    admin_url( 'admin.php?page=cosmic-mddr' ),
+                    esc_attr__( 'Settings', 'media-directory-pro' ),
+                    esc_html__( 'Settings', 'media-directory-pro' )
                 ),
             );
             return array_merge( $action_links, $links );
         }
     }
 
-    WPMN_Install_Pro::init();
+    MDDR_Install_Pro::init();
 
 endif;

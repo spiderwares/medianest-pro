@@ -1,4 +1,4 @@
-=== Medianest Pro ===
+=== Media Directory Pro ===
 Contributors: cosmicinfosoftware
 Requires at least: 5.2
 Tested up to: 6.9
@@ -13,7 +13,7 @@ Organize and sort WordPress media with folders, themes, and advanced tools for a
 
 == Description ==
 
-**Medianest Pro** is the ultimate media management solution for WordPress. It extends the core MediaNest functionality with advanced organizational tools, custom themes, and support for all post types. Whether you're managing thousands of images or organizing WooCommerce products, Medianest Pro provides the speed and flexibility you need to maintain a clean and efficient media library.
+**Media Directory** is the ultimate media management solution for WordPress. It extends the core MediaNest functionality with advanced organizational tools, custom themes, and support for all post types. Whether you're managing thousands of images or organizing WooCommerce products, Media Directory provides the speed and flexibility you need to maintain a clean and efficient media library.
 
 == Why Go Pro? ==
 
@@ -59,7 +59,7 @@ Yes. The Pro version includes a color picker in the folder context menu, allowin
 Yes. You can right-click any folder and select "Download" to generate a ZIP file containing all assets within that folder.
 
 = Will it slow down my site? =
-No. Medianest Pro is lightweight and optimized for performance, using efficient AJAX calls and localized storage to ensure a fast interface even with thousands of files.
+No. Media Directory is lightweight and optimized for performance, using efficient AJAX calls and localized storage to ensure a fast interface even with thousands of files.
 
 = Does it support subfolders? =
 Yes, it supports unlimited levels of subfolders, and you can even choose how file counts are displayed (individual or cumulative).
@@ -78,7 +78,7 @@ Yes, it supports unlimited levels of subfolders, and you can even choose how fil
 == Changelog ==
 
 1.0.0 – Initial Release
-* Initial release of Medianest Pro.
+* Initial release of Media Directory.
 * Added Advanced Folder and File Sorting.
 * Added Folder Color Customization.
 * Added Windows and Dropbox Folder Themes.
@@ -89,4 +89,4 @@ Yes, it supports unlimited levels of subfolders, and you can even choose how fil
 == Upgrade Notice ==
 
 = 1.0.0 =
-Initial release of Medianest Pro.
+Initial release of Media Directory.

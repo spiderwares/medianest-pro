@@ -8,7 +8,7 @@
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-if ( ! function_exists( 'wpmn_get_template_pro' ) ) :
+if ( ! function_exists( 'mddr_get_template_pro' ) ) :
 
     /**
      * Loads a template from the Pro version template directory.
@@ -19,11 +19,11 @@ if ( ! function_exists( 'wpmn_get_template_pro' ) ) :
      *
      * @return void|WP_Error
      */
-    function wpmn_get_template_pro( $template_name, $args = array(), $template_path = '' ) {
+    function mddr_get_template_pro( $template_name, $args = array(), $template_path = '' ) {
 
         // Default Pro template path
         if ( empty( $template_path ) ) :
-            $template_path = WPMN_PRO_PATH . '/templates/';
+            $template_path = MDDR_PRO_PATH . '/templates/';
         endif;
 
         $template = $template_path . $template_name;
@@ -33,13 +33,13 @@ if ( ! function_exists( 'wpmn_get_template_pro' ) ) :
                 'error',
                 sprintf(
                     // translators: %s: The full path to the missing template file.
-                    esc_html__( '%s does not exist.', 'medianest-pro' ),
+                    esc_html__( '%s does not exist.', 'media-directory-pro' ),
                     '<code>' . esc_html( $template ) . '</code>'
                 )
             );
         endif;
 
-        do_action( 'wpmn_pro_before_template_part', $template, $args, $template_path );
+        do_action( 'mddr_pro_before_template_part', $template, $args, $template_path );
 
         if ( ! empty( $args ) && is_array( $args ) ) :
             extract( $args );
@@ -47,7 +47,7 @@ if ( ! function_exists( 'wpmn_get_template_pro' ) ) :
 
         include $template;
 
-        do_action( 'wpmn_pro_after_template_part', $template, $args, $template_path );
+        do_action( 'mddr_pro_after_template_part', $template, $args, $template_path );
     }
 
 endif;
